@@ -1,13 +1,16 @@
 const containerProduit = document.getElementById("affichage_produit");
-const containerOptions = document.getElementById("options");
+const listeOptions = document.getElementById("selectOption");
+const quantiteProduits = document.getElementById("quantite");
+const buttonAjouter = document.getElementById("btn_ajouter");
+const typeOption = document.getElementById("type_option");
 
-
+const monPanier = document.getElementById("mon_panier");
 
 ////////////////////////////////////Ours en Peluche/////////////////////////////////////////////
 
 const url="http://localhost:3000/api/teddies";
-const productIdOurs = window.location.search.substring(1);
-const urlOurs=`${url}/${productIdOurs}`; 
+const productId = window.location.search.substring(1);
+const urlOurs=`${url}/${productId}`; 
 
 fetch(urlOurs)
 .then(res => {
@@ -16,8 +19,8 @@ fetch(urlOurs)
   } 
 })
 .then(data => {
-
-  let produitOurs = "";
+  
+  let produitOurs = [];
   produitOurs = 
   `<div id="container_single_item">
           <h1>${data.name}</h1>
@@ -26,100 +29,160 @@ fetch(urlOurs)
           <p><strong>Description :</strong><br> ${data.description}</p>
   </div>`
 
-
-  let produitOptions = "";
-  produitOptions =
-  `<form>
-      <label for="couleur"><h4>Choisir la couleur</h4></label><br>
-          <select id="couleur" name="couleur">
-            <option value="${data.colors[0]}">${data.colors[0]}</option>
-            <option value="${data.colors[1]}">${data.colors[1]}</option>
-            <option value="${data.colors[2]}">${data.colors[2]}</option>
-            <option value="${data.colors[3]}">${data.colors[3]}</option>
-          </select>
-          <p id="affichageCouleur"></p>
-          <br>
-          <label for="quantite"><h4>Choisir la quantité</h4></label><br>
-          <input type="number" value="1" id="quantite" name="quantite" min="1" max="99">
-          <br>
-          <p id="affichageQuantite"></p>
-          <br>
-          <button id="btn_ajouter" type="button">Ajouter au pannier</button>
-    </form>`
-
-    
-
+  //Injection dans le HTML dans la div "affichage_produit"
   containerProduit.innerHTML = produitOurs;
-  containerOptions.innerHTML = produitOptions;
 
-  let quantiteData = document.getElementById("quantite");
-  let couleurData = document.getElementById("couleur");
-  const btnAjouter = document.getElementById("btn_ajouter");
-  const affichageCouleur = document.getElementById("affichageCouleur");
-  const affichageQuantite = document.getElementById("affichageQuantite");
+///////////////////////////////////////////////////////////////////////////////////
 
-  //Affichage de la couleur choisi
-  couleurData.addEventListener('change', (event) => {
-  const couleurCapture = event.target.value;
-  affichageCouleur.innerHTML = `Couleur choisi : <strong>${event.target.value}</strong>`
-  });
+//GESTION DES OPTIONS DU PRODUIT
 
-  //Affichage de la quantité choisi
-  quantiteData.addEventListener('change', (event) => {
-    const quantiteCapture = event.target.value;
-    affichageQuantite.innerHTML = `Quantité choisi : <strong>${event.target.value}</strong>`
+//Boucle pour les choisir options du produit données par l'API
+  const choisirCouleur = data.colors;
+
+  let listeOptionsOurs = [];
+
+  for(let j = 0; j < choisirCouleur.length; j++) {
+    listeOptionsOurs = listeOptionsOurs + 
+    `<option value="${choisirCouleur[j]}">${choisirCouleur[j]}</option>`
+  }
+
+  //Injecter la boucle dans le HTML
+  listeOptions.innerHTML = listeOptionsOurs;
+  //Change le texte pour les options du produit
+  typeOption.innerHTML = " la couleur :" 
+
+  ///////////////////////////////////////////////////
+  //Ajouter le produit au panier
+
+  buttonAjouter.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const optionChoisi = listeOptions.value;
+    const quantiteChoisi = quantiteProduits.value;
+
+    let dataProduit = {
+      idProduit: productId,
+      nomProduit: data.name,
+      optionProduit: optionChoisi,
+      quantiteProduit: quantiteChoisi,
+      prixProduit: data.price / 100
+    }
+
+//////////////////////////////Local Storage//////////////////////////////////////////////////
+
+let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+
+console.log(produitLocalStorage);
+
+if(produitLocalStorage) {
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+
+} else {
+  produitLocalStorage = [];
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  
+ 
+ console.log(produitLocalStorage);
+ 
+}
+
+    monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
+    au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
+
   });
 
 })
 .catch(err => { 
-  console.log("Une erreur est survenue !");
 });
-
 
 
 ////////////////////////////////////Caméras Vintage/////////////////////////////////////////////
 
 const urlItemCamera="http://localhost:3000/api/cameras";
-const productIdCamera = window.location.search.substring(1);
-const urlCamera=`${urlItemCamera}/${productIdCamera}`; 
+const urlCamera=`${urlItemCamera}/${productId}`; 
 
 fetch(urlCamera)
 .then(res => {
   if(res.ok) {
-    console.log("url ok");
     return res.json();
   } 
 })
 .then(data => {
-  let produitCamera = "";
-  
-  produitCamera = `<div id="container_single_item">
-  <h1>${data.name}</h1>
-  <img src="${data.imageUrl}">
-  <p>${data.price / 100} €<p>
-  <p>${data.description}</p>
+  let produitCameras = [];
+  produitCameras = 
+  `<div id="container_single_item">
+          <h1>${data.name}</h1>
+          <img src="${data.imageUrl}">
+          <p><strong>Prix :</strong> ${data.price / 100} €<p>
+          <p><strong>Description :</strong><br> ${data.description}</p>
   </div>`
 
+  //Injection dans le HTML dans la div "affichage_produit"
+  containerProduit.innerHTML = produitCameras;
 
-  let produitOptions = "";
-  produitOptions =
-  `<form>
-      <label for="lenses"><h4>Choisir la lense</h4></label><br>
-          <select id="couleur" name="lenses">
-            <option value="${data.lenses[0]}">${data.lenses[0]}</option>
-            <option value="${data.lenses[1]}">${data.lenses[1]}</option>
-            <option value="${data.lenses[2]}">${data.lenses[2]}</option>
-            <option value="${data.lenses[3]}">${data.lenses[3]}</option>
-          </select>
-          <br><br>
-          <label for="quantite"><h4>Choisir la quantité<h4></label><br>
-          <input type="number" value="1" id="quantite" name="quantite" min="1" max="99">
-          <br><br>
-          <button id="btn_ajouter" type="button">Ajouter au pannier</button>
-    </form>`
+  typeOption.innerHTML = " le lens :"
 
-  containerProduit.innerHTML = produitCamera;
-  containerOptions.innerHTML = produitOptions;
+///////////////////////////////////////////////////////////////////////////////////
+
+//GESTION DES OPTIONS DU PRODUIT
+
+//Boucle pour les choisir options du produit données par l'API
+  const choisirLens = data.lenses;
+
+  let listeOptionsCamera = [];
+
+  for(let j = 0; j < choisirLens.length; j++) {
+    listeOptionsCamera = listeOptionsCamera + 
+    `<option value="${choisirLens[j]}">${choisirLens[j]}</option>`
+  }
+
+  //Injecter la boucle dans le HTML
+  listeOptions.innerHTML = listeOptionsCamera;
+
+  ///////////////////////////////////////////////////
+  //Ajouter le produit au panier
+
+  buttonAjouter.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const optionChoisi = listeOptions.value;
+    const quantiteChoisi = quantiteProduits.value;
+
+    let dataProduit = {
+      idProduit: productId,
+      nomProduit: data.name,
+      optionProduit: optionChoisi,
+      quantiteProduit: quantiteChoisi,
+      prixProduit: data.price / 100
+    }
+
+//////////////////////////////Local Storage//////////////////////////////////////////////////
+
+let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+
+console.log(produitLocalStorage);
+
+
+if(produitLocalStorage) {
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+
+} else {
+  produitLocalStorage = [];
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  
+ 
+ console.log(produitLocalStorage);
+ 
+}
+
+monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> avec l'option lens de <span class="text_souligne">${dataProduit.optionProduit}</span>
+au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
+
+  });
 
 })
 .catch(err => { 
@@ -130,8 +193,7 @@ fetch(urlCamera)
 ////////////////////////////////////Meubles en chêne/////////////////////////////////////////////
 
 const urlItemMeuble="http://localhost:3000/api/furniture";
-const productIdMeuble = window.location.search.substring(1);
-const urlMeuble=`${urlItemMeuble}/${productIdMeuble}`; 
+const urlMeuble=`${urlItemMeuble}/${productId}`; 
 
 fetch(urlMeuble)
 .then(res => {
@@ -140,36 +202,89 @@ fetch(urlMeuble)
   } 
 })
 .then(data => {
-  let produitMeuble = "";
-  
-  produitMeuble = `<div id="container_single_item">
-  <h1>${data.name}</h1>
-  <img src="${data.imageUrl}">
-  <p>${data.price / 100} €<p>
-  <p>${data.description}</p>
+  let produitMeubles = [];
+  produitMeubles = 
+  `<div id="container_single_item">
+          <h1>${data.name}</h1>
+          <img src="${data.imageUrl}">
+          <p><strong>Prix :</strong> ${data.price / 100} €<p>
+          <p><strong>Description :</strong><br> ${data.description}</p>
   </div>`
 
-  let produitOptions = "";
-  produitOptions =
-  `<form>
-      <label for="vernis"><h4>Choisir la couleur</h4></label><br>
-          <select id="vernis" name="vernis">
-            <option value="${data.varnish[0]}">${data.varnish[0]}</option>
-            <option value="${data.varnish[1]}">${data.varnish[1]}</option>
-            <option value="${data.varnish[2]}">${data.varnish[2]}</option>
-            <option value="${data.varnish[3]}">${data.varnish[3]}</option>
-          </select>
-          <br><br>
-          <label for="quantite"><h4>Choisir la quantité<h4></label><br>
-          <input type="number" value="1" id="quantite" name="quantite" min="1" max="99">
-          <br><br>
-          <button id="btn_ajouter" type="button">Ajouter au pannier</button>
-    </form>`
+  //Injection dans le HTML dans la div "affichage_produit"
+  containerProduit.innerHTML = produitMeubles;
 
-  containerProduit.innerHTML = produitMeuble;
-  containerOptions.innerHTML = produitOptions;
+  typeOption.innerHTML = " le type de vernis :"
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+//GESTION DES OPTIONS DU PRODUIT
+
+//Boucle pour les choisir options du produit données par l'API
+  const choisirVernis = data.varnish;
+
+  let listeOptionsMeuble = [];
+
+  for(let j = 0; j < choisirVernis.length; j++) {
+    listeOptionsMeuble = listeOptionsMeuble + 
+    `<option value="${choisirVernis[j]}">${choisirVernis[j]}</option>`
+  }
+
+  //Injecter la boucle dans le HTML
+  listeOptions.innerHTML = listeOptionsMeuble;
+
+
+  ///////////////////////////////////////////////////
+  //Ajouter le produit au panier
+
+  buttonAjouter.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const optionChoisi = listeOptions.value;
+    const quantiteChoisi = quantiteProduits.value;
+
+    let dataProduit = {
+      idProduit: productId,
+      nomProduit: data.name,
+      optionProduit: optionChoisi,
+      quantiteProduit: quantiteChoisi,
+      prixProduit: data.price / 100
+    };
+
+
+//////////////////////////////Local Storage//////////////////////////////////////////////////
+
+let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+
+console.log(produitLocalStorage);
+
+
+if(produitLocalStorage) {
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+
+} else {
+  produitLocalStorage = [];
+  produitLocalStorage.push(dataProduit);
+  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  
+ 
+ console.log(produitLocalStorage);
+ 
+}
+
+monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
+au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
+
+  });
 
 })
 .catch(err => { 
   console.log("Une erreur est survenue !");
 });
+
+
+
+
+

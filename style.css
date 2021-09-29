@@ -215,15 +215,74 @@ footer li {
     height: auto;
 }
 
-#container_pannier {
+#container_panier {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-self: center;
+    align-items: center;
+    margin: 20px;
 }
 
-#container_pannier h1 {
+#container_panier h1 {
     text-align: center;
+}
+
+.data_panier {
+    background-color:#F3E9F1;
+    width: 50%;
+    padding: 20px;
+}
+
+#panier_total {
+    background-color: cornflowerblue;
+}
+
+#panier_vide {
+    background-color: rgb(241, 125, 83);
+    padding: 20px;
+}
+
+#panier_table {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin: 5px;
+    border: 2px solid white;
+    
+}
+
+.item_table {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    padding: 5px;;
+}
+
+#nom_produit{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#prix_produit{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+/*Page Panier */
+
+#container_options {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    width: 200px;
+    margin: 20px;
+    background-color:#F3E9F1;
+    padding: 20px;
+    border-radius: 20px;
 }
 
 /* Formulaire */
@@ -239,6 +298,15 @@ footer li {
 #btn_ajouter:hover {
     opacity: 80%;
     box-shadow: 1px 1px 6px #261624;
+}
+
+#tableau_options {
+    width: 120px;
+}
+
+.text_souligne {
+    font-weight: bold;
+    color: royalblue;
 }
 
 @media only screen and (max-width: 1024px) {

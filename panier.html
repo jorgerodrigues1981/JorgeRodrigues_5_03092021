@@ -13,16 +13,20 @@
         <nav>
             <ul>
                 <li><a href="index.html">Accueil</a></li>
-                <li><a href="pannier.html">Pannier</a></li>
                 <li><a href="commandes.html">Commandes</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="container_pannier">
+        <section id="container_panier">
             <h1>Votre panier</h1>
-            <div id="mon_pannier"></div>
+            <div id="articles_panier" class="data_panier"></div>
+    
+            <div id="panier_total" class="data_panier">
+                <h2>Montant total a payer : </h2>
+                <p id="panier_montant_total"></p>
+            </div>
         </section>
     </main>
     
@@ -38,7 +42,7 @@
 </footer>
 
 <script src="js/produits.js"></script>
-<script src="js/pannier.js"></script>
+<script src="js/panier.js"></script>
 
 </body>
 
