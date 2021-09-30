@@ -9,19 +9,15 @@ const meublesChene = document.getElementById("meublesChene");
 fetch("http://localhost:3000/api/teddies")
 .then(res => {
     if(res.ok){
-        console.log("fetch ok");
         return res.json();
     } else {
-        console.log("erreur");
     }
 }) 
 .then(data => {
-    console.log(data);
     let listeOurs = " ";
 
     //Boucle pour récupérer les données des produits - Ours en Peluche
     for(let i = 0; i < data.length; i++) {
-        console.log(data[i].name);
     
     listeOurs +=
     `<div id="container_item">
@@ -46,19 +42,17 @@ fetch("http://localhost:3000/api/teddies")
 fetch("http://localhost:3000/api/cameras")
 .then(res => {
     if(res.ok){
-        console.log("fetch ok");
         return res.json();
     } else {
         console.log("erreur");
     }
 }) 
 .then(data => {
-    console.log(data);
+    
     let listeCameras = " ";
 
     //Boucle pour récupérer les données des produits - Caméras vintage
     for(let i = 0; i < data.length; i++) {
-        console.log(data[i].name);
     
     listeCameras +=
     `<div id="container_item">
@@ -83,19 +77,16 @@ fetch("http://localhost:3000/api/cameras")
 fetch("http://localhost:3000/api/furniture")
 .then(res => {
     if(res.ok){
-        console.log("fetch ok");
         return res.json();
     } else {
         console.log("erreur");
     }
 }) 
 .then(data => {
-    console.log(data);
     let listeMeubles = " ";
 
     //Boucle pour récupérer les données des produits - Meubles en chêne
     for(let i = 0; i < data.length; i++) {
-        console.log(data[i].name);
     
     listeMeubles +=
     `<div id="container_item">

@@ -234,6 +234,8 @@ footer li {
 }
 
 #panier_total {
+    display: flex;
+    flex-direction: row;
     background-color: cornflowerblue;
 }
 
@@ -293,11 +295,13 @@ footer li {
     border: 2px solid white;
     height: 50px;
     width: 100%;
+    border-radius: 10px;
 }
 
 #btn_ajouter:hover {
-    opacity: 80%;
-    box-shadow: 1px 1px 6px #261624;
+    background-color: #583654;
+    cursor: pointer;
+    box-shadow: 2px 2px 6px #261624;
 }
 
 #tableau_options {
@@ -308,6 +312,53 @@ footer li {
     font-weight: bold;
     color: royalblue;
 }
+
+.btn_supprimer {
+    background-color: #261624;
+    color: white;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 1px 1px 6px #261624;
+}
+
+.btn_supprimer:hover {
+    background-color: #583654;
+    box-shadow: 2px 2px 6px #261624;
+    cursor: pointer;
+}
+
+#container_btn_supprimer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
+
+#btn_vider_panier {
+    background-color: royalblue;
+    color: white;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 1px 1px 6px royalblue;
+    width: 200px;
+}
+
+#btn_vider_panier:hover {
+    background-color: rgb(147, 164, 214);
+    box-shadow: 2px 2px 6px royalblue;
+    cursor: pointer;
+}
+
+.nombre_total_articles {
+    font-weight: bold;
+    color: royalblue;
+}
+
 
 @media only screen and (max-width: 1024px) {
     .produits {
