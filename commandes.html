@@ -19,8 +19,61 @@
         </nav>
     </header>
 
-    <main>
-   
+
+<main>
+            <section id="container_panier">
+                <h1>Votre commande</h1>
+                <div id="articles_panier" class="data_panier"></div>
+                <div id="panier_total" class="data_panier">
+                    <p id="panier_montant_total"></p>
+                </div>
+                <div id="formulaire_commande">
+                    <h2>Formulaire de commande</h2>
+                    <form id="form_donnees_commande">
+                        <div class="champ_form">
+                            <label for="nom">Nom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="nom" class="input_form" name="user_nom" placeholder="Nom" required="required">
+                        </div>
+                        <p id="validation_nom" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="prenom">Prénom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="prenom" class="input_form" name="user_prenom" placeholder="Prenom" required="required"><br>
+                        </div>
+                        <p id="validation_prenom" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="addresse">Adresse <span class="asterisque_form">*</span></label>
+                            <textarea type="text" id="addresse" class="input_form" name="user_addresse" placeholder="Adresse" required="required"></textarea><br>    
+                        </div>
+                        <p id="validation_adresse" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="code_postal">Code postal <span class="asterisque_form">*</span></label>
+                            <input type="text" id="code_postal" class="input_form" name="user_code_postal" placeholder="Code Postal" required="required"><br>    
+                        </div>
+                        <p id="validation_code_postal" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="ville">Ville <span class="asterisque_form">*</span></label>
+                            <input type="text" id="ville" class="input_form" name="user_ville" placeholder="Ville" required="required"><br>    
+                        </div>
+                        <p id="validation_ville" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="telephone">Téléphone <span class="asterisque_form">*</span></label>
+                            <input type="text" id="telephone" class="input_form" name="user_telephone" placeholder="Téléphone" required="required"><br>    
+                        </div>
+                        <p id="validation_telephone" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="mail">E-mail <span class="asterisque_form">*</span></label>
+                            <input type="email" id="mail" class="input_form" name="user_mail" placeholder="E-mail" required="required">  
+                        </div>
+                        <p id="validation_email" class="texte_validation"></p> 
+                        
+                        <br><p id="info_validation">Les champs indiqués par une * sont obligatoires</p>
+                        <button type="submit" id="btn_envoyer_commande">Envoyer la commande</button>
+                    </form>
+                </div>
+            </section>
+            
+            </main>
+        </main>
     </main>
     
 <footer>
@@ -34,10 +87,7 @@
         </nav>
 </footer>
 
-
-<script src="js/script.js"></script>
-<script src="js/produits.js"></script>
-<script src="js/panier.js"></script>
+<script src="js/commandes.js"></script>
 
 </body>
 

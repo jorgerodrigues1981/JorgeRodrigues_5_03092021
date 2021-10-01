@@ -75,16 +75,3 @@ const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
 totalPanier.innerHTML = "<strong>Montant total a payer :</strong> " + prixTotalPanier.reduce(reducer) + " €";
 
-
-///////////////////////////////Total d'articles///////////////////////////////
-const panierNombreTotal = document.querySelector(".nombre_total_articles");
-
-let nombreTotalPanier = [];
-
-for(let t = 0; t < produitLocalStorage.length; t++) {
-    let nombreArticlePanier = produitLocalStorage[t].lenght;
-    nombreTotalPanier.push(produitLocalStorage.length);
-}
-
-panierNombreTotal.innerHTML = "(" + nombreTotalPanier.length + ")";
-

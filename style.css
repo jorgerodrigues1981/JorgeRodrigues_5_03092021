@@ -359,6 +359,58 @@ footer li {
     color: royalblue;
 }
 
+#commande_table {
+    display: flex;
+    flex-direction: row;
+
+}
+
+/* Formulaire */
+#info_validation {
+    font-size: 0.8em;
+    color: crimson;
+    text-align: center;
+}
+
+.texte_validation {
+    font-size: 0.7em;
+    text-align: right;
+    margin: 0;
+}
+
+.champ_form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    padding: 5px;
+}
+
+.input_form {
+    margin-left: 5px;
+    width: 50%;
+    height: auto;
+}
+
+.asterisque_form {
+    font-size: 1em;
+    color: crimson;
+}
+
+#formulaire_commande {
+    background-color:#F3E9F1;
+    width: 50%;
+    padding: 20px;
+}
+
+#form_donnees_commande {
+    display: flex;
+    flex-direction: column;
+    background-color: #d1c0ce;
+    padding: 20px;
+}
+
+
 
 @media only screen and (max-width: 1024px) {
     .produits {

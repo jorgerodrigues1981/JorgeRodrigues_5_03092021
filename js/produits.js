@@ -257,9 +257,6 @@ fetch(urlMeuble)
 
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-console.log(produitLocalStorage);
-
-
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
   localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
