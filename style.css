@@ -228,15 +228,20 @@ footer li {
 }
 
 .data_panier {
+    display: flex;
+    flex-direction: column;
     background-color:#F3E9F1;
-    width: 50%;
+    width: 60%;
     padding: 20px;
 }
 
-#panier_total {
+#container_total_panier {
     display: flex;
-    flex-direction: row;
-    background-color: cornflowerblue;
+    flex-flow: row;
+    justify-self: center;
+    align-self: center;
+    background-color: cadetblue;
+    border-radius: 20px;
 }
 
 #panier_vide {
@@ -354,6 +359,22 @@ footer li {
     cursor: pointer;
 }
 
+#btn_envoyer_commande {
+    background-color: royalblue;
+    color: white;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 1px 1px 6px royalblue;
+}
+
+#btn_envoyer_commande:hover {
+    background-color: rgb(147, 164, 214);
+    box-shadow: 2px 2px 6px royalblue;
+    cursor: pointer;
+}
+
 .nombre_total_articles {
     font-weight: bold;
     color: royalblue;
@@ -376,6 +397,7 @@ footer li {
     font-size: 0.7em;
     text-align: right;
     margin: 0;
+    color: crimson;
 }
 
 .champ_form {
@@ -388,8 +410,10 @@ footer li {
 
 .input_form {
     margin-left: 5px;
-    width: 50%;
-    height: auto;
+    width: 70%;
+    height: 30px;
+    border: 1px solid #C2C8C2;
+    border-radius: 10px;
 }
 
 .asterisque_form {
@@ -399,7 +423,6 @@ footer li {
 
 #formulaire_commande {
     background-color:#F3E9F1;
-    width: 50%;
     padding: 20px;
 }
 
@@ -411,6 +434,11 @@ footer li {
 }
 
 
+#total_prix_panier {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+}
 
 @media only screen and (max-width: 1024px) {
     .produits {

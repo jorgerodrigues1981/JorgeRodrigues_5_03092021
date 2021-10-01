@@ -44,7 +44,7 @@ totalPanier.innerHTML = "<strong>Montant total a payer :</strong> " + prixTotalP
 
 const nomUser = document.querySelector("#nom");
 const prenomUser = document.querySelector("#prenom");
-const adresseUser = document.querySelector("#addresse");
+const adresseUser = document.querySelector("#adresse");
 const codePostalUser = document.querySelector("#code_postal");
 const villeUser = document.querySelector("#ville");
 const telephoneUser = document.querySelector("#telephone");

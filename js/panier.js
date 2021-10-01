@@ -73,5 +73,205 @@ for(let m = 0; m < produitLocalStorage.length; m++) {
 
 const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
-totalPanier.innerHTML = "<strong>Montant total a payer :</strong> " + prixTotalPanier.reduce(reducer) + " €";
+const containerTotalPanierHtml = `
+<div id="container_total_panier" class="data_panier">
+<p id="panier_montant_total"><strong>Montant total a payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
+</div>`
+
+articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
+
+/////////////////////////////////Formulaire commande////////////////////////////
+
+const afficherFormulaireCommande = () => {
+
+    const containerFormulaire = document.getElementById("articles_panier");
+
+    const formulaireHtml = `
+    <div id="formulaire_commande">
+                    <h2>Formulaire de commande</h2>
+                    <form id="form_donnees_commande">
+                        <div class="champ_form">
+                            <label for="nom">Nom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="nom" class="input_form" name="user_nom" placeholder="Nom" required="required">
+                        </div>
+                        <p id="validation_nom" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="prenom">Prénom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="prenom" class="input_form" name="user_prenom" placeholder="Prenom" required="required"><br>
+                        </div>
+                        <p id="validation_prenom" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="adresse">Adresse<span class="asterisque_form">*</span></label>
+                            <textarea type="text" id="adresse" class="input_form" name="user_adresse" placeholder="Adresse" required="required"></textarea><br>    
+                        </div>
+                        <p id="validation_adresse" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="code_postal">Code postal <span class="asterisque_form">*</span></label>
+                            <input type="text" id="code_postal" class="input_form" name="user_code_postal" placeholder="Code Postal" required="required"><br>    
+                        </div>
+                        <p id="validation_code_postal" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="ville">Ville <span class="asterisque_form">*</span></label>
+                            <input type="text" id="ville" class="input_form" name="user_ville" placeholder="Ville" required="required"><br>    
+                        </div>
+                        <p id="validation_ville" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="telephone">Téléphone <span class="asterisque_form">*</span></label>
+                            <input type="text" id="telephone" class="input_form" name="user_telephone" placeholder="Téléphone" required="required"><br>    
+                        </div>
+                        <p id="validation_telephone" class="texte_validation"></p>
+                        <div class="champ_form">
+                            <label for="mail">E-mail <span class="asterisque_form">*</span></label>
+                            <input type="email" id="mail" class="input_form" name="user_mail" placeholder="E-mail" required="required">  
+                        </div>
+                        <p id="validation_email" class="texte_validation"></p> 
+                        
+                        <br><p id="info_validation">Les champs indiqués par une * sont obligatoires</p>
+                        <button type="submit" id="btn_envoyer_commande">Envoyer la commande</button>
+                    </form>
+                </div>`;
+
+                articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
+    
+};
+
+//Afficher le formulaire
+afficherFormulaireCommande();
+
+
+//Acceder aux champs du formulaire
+const nomUser = document.querySelector("#nom");
+const prenomUser = document.querySelector("#prenom");
+const adresseUser = document.querySelector("#adresse");
+const codePostalUser = document.querySelector("#code_postal");
+const villeUser = document.querySelector("#ville");
+const telephoneUser = document.querySelector("#telephone");
+const mailUser = document.querySelector("#mail");
+const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
+
+btnEnvoyerCommande.addEventListener("click", (event) => {
+    event.preventDefault();
+
+/////////////////Recuperation des données du formulaire et les mettre dans localStorage
+const userInformationFormulaire = {
+    nom: nomUser.value,
+    prenom: prenomUser.value,
+    adresse: adresseUser.value,
+    codePostal: codePostalUser.value,
+    ville: villeUser.value,
+    telephone: telephoneUser.value,
+    mail: mailUser.value
+};
+
+console.log(userInformationFormulaire);
+
+localStorage.setItem("userInformationFormulaire", JSON.stringify(userInformationFormulaire));
+
+const donneesEnvoyer = {
+    produitLocalStorage,
+    userInformationFormulaire
+}
+
+});
+
+//////
+const dataLocalStorage = localStorage.getItem("userInformationFormulaire");
+
+const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
+
+nomUser.value = dataLocalStorageObjet.nom;
+prenomUser.value = dataLocalStorageObjet.prenom;
+adresseUser.value = dataLocalStorageObjet.adresse;
+codePostalUser.value = dataLocalStorageObjet.codePostal;
+villeUser.value = dataLocalStorageObjet.ville;
+telephoneUser.value = dataLocalStorageObjet.telephone;
+mailUser.value = dataLocalStorageObjet.mail;
+
+
+//////////////////////Functions pour validation du formulaire//////////////////////////////////////////
+const validationNom = document.querySelector("#validation_nom");
+//Validation du nom
+function valChampNom(){
+    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(nomUser.value)) {
+        document.getElementById("validation_nom").innerHTML = "";
+        nomUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_nom").innerHTML = "Le nom est un champ obligatoire. Veuillez le renseigner. Minimum de trois caractères.";
+        nomUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation du prénom
+function valChampPrenom(){
+    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(prenomUser.value)) {
+        document.getElementById("validation_prenom").innerHTML = "";
+        prenomUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_prenom").innerHTML = "Le prénom est un champ obligatoire. Veuillez le renseigner. Minimum de trois caractères.";
+        prenomUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation de l'adresse
+function valChampAdresse(){
+    if(/^[A-Za-z0-9 _àâæçéèêëîïôœùûüÿ-]{3,200}$/.test(adresseUser.value)) {
+        document.getElementById("validation_adresse").innerHTML = "";
+        adresseUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_adresse").innerHTML = "L'adresse est un champ obligatoire. Veuillez le renseigner.";
+        adresseUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation du code postal
+function valChampCodePostal(){
+    if(/^[0-9]{5}$/.test(codePostalUser.value)) {
+        document.getElementById("validation_code_postal").innerHTML = "";
+        codePostalUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_code_postal").innerHTML = "Le code postal est un champ obligatoire. Veuillez le renseigner. Le code postal doit contenir 5 chiffres.";
+        codePostalUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation de la ville
+function valChampVille(){
+    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,100}$/.test(villeUser.value)) {
+        document.getElementById("validation_ville").innerHTML = "";
+        villeUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_ville").innerHTML = "Le nom de la ville est un champ obligatoire. Veuillez le renseigner.";
+        villeUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation téléphone
+function valChampTelephone(){
+    if(/^[0-9]{9,20}$/.test(telephoneUser.value)) {
+        document.getElementById("validation_telephone").innerHTML = "";
+        telephoneUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_telephone").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Le numéro de téléphone ne doit contenir que des chiffres.";
+        telephoneUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+//Validation e-mail
+function valChampMail(){
+    if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mailUser.value)) {
+        document.getElementById("validation_email").innerHTML = "";
+        mailUser.style.border = "2px solid #62E74D";
+    } else {
+        document.getElementById("validation_email").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Veuillez respecter le format email : mon_email@gmail.com.";
+        mailUser.style.border = "2px solid #E74D4D";
+    }
+};
+
+nomUser.addEventListener("input", valChampNom);
+prenomUser.addEventListener("input", valChampPrenom);
+adresseUser.addEventListener("input", valChampAdresse);
+codePostalUser.addEventListener("input", valChampCodePostal);
+villeUser.addEventListener("input", valChampVille);
+telephoneUser.addEventListener("input", valChampTelephone);
+mailUser.addEventListener("input", valChampMail);
 
