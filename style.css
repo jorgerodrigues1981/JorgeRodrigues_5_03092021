@@ -360,19 +360,27 @@ footer li {
 }
 
 #btn_envoyer_commande {
-    background-color: royalblue;
+    background-color: #7AD03A;
+    font-weight: bold;
     color: white;
     margin: 10px;
     border: 1px solid white;
     border-radius: 10px;
     padding: 8px;
-    box-shadow: 1px 1px 6px royalblue;
+    box-shadow: 1px 1px 6px #7AD03A;
 }
 
 #btn_envoyer_commande:hover {
-    background-color: rgb(147, 164, 214);
-    box-shadow: 2px 2px 6px royalblue;
+    background-color: #a0f0ab;
     cursor: pointer;
+    box-shadow: 2px 2px 6px #a0f0ab;
+}
+
+#btn_envoyer_commande:disabled {
+    background-color: rgb(218, 220, 226);
+    color: rgb(179, 180, 184);
+    cursor: none;
+    box-shadow: none;
 }
 
 .nombre_total_articles {
@@ -383,7 +391,6 @@ footer li {
 #commande_table {
     display: flex;
     flex-direction: row;
-
 }
 
 /* Formulaire */
@@ -429,7 +436,7 @@ footer li {
 #form_donnees_commande {
     display: flex;
     flex-direction: column;
-    background-color: #d1c0ce;
+    background-color: #7c7c7c;
     padding: 20px;
 }
 
@@ -439,6 +446,22 @@ footer li {
     font-weight: bold;
     font-size: 1.5em;
 }
+
+#container_confirmation_commande {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#message_confirmation {
+    background-color: #C2C8C2;
+    width: 60%;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
 
 @media only screen and (max-width: 1024px) {
     .produits {

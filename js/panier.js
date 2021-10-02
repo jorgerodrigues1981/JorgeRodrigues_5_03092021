@@ -172,6 +172,9 @@ const donneesEnvoyer = {
     userInformationFormulaire
 }
 
+window.location.href = "confirmation_commande.html"
+
+
 });
 
 //////
@@ -195,9 +198,11 @@ function valChampNom(){
     if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(nomUser.value)) {
         document.getElementById("validation_nom").innerHTML = "";
         nomUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_nom").innerHTML = "Le nom est un champ obligatoire. Veuillez le renseigner. Minimum de trois caractères.";
         nomUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -206,9 +211,11 @@ function valChampPrenom(){
     if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(prenomUser.value)) {
         document.getElementById("validation_prenom").innerHTML = "";
         prenomUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_prenom").innerHTML = "Le prénom est un champ obligatoire. Veuillez le renseigner. Minimum de trois caractères.";
         prenomUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -217,9 +224,11 @@ function valChampAdresse(){
     if(/^[A-Za-z0-9 _àâæçéèêëîïôœùûüÿ-]{3,200}$/.test(adresseUser.value)) {
         document.getElementById("validation_adresse").innerHTML = "";
         adresseUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_adresse").innerHTML = "L'adresse est un champ obligatoire. Veuillez le renseigner.";
         adresseUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -228,9 +237,11 @@ function valChampCodePostal(){
     if(/^[0-9]{5}$/.test(codePostalUser.value)) {
         document.getElementById("validation_code_postal").innerHTML = "";
         codePostalUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_code_postal").innerHTML = "Le code postal est un champ obligatoire. Veuillez le renseigner. Le code postal doit contenir 5 chiffres.";
         codePostalUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -239,9 +250,11 @@ function valChampVille(){
     if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,100}$/.test(villeUser.value)) {
         document.getElementById("validation_ville").innerHTML = "";
         villeUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_ville").innerHTML = "Le nom de la ville est un champ obligatoire. Veuillez le renseigner.";
         villeUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -250,9 +263,11 @@ function valChampTelephone(){
     if(/^[0-9]{9,20}$/.test(telephoneUser.value)) {
         document.getElementById("validation_telephone").innerHTML = "";
         telephoneUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_telephone").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Le numéro de téléphone ne doit contenir que des chiffres.";
         telephoneUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true;
     }
 };
 
@@ -261,9 +276,11 @@ function valChampMail(){
     if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(mailUser.value)) {
         document.getElementById("validation_email").innerHTML = "";
         mailUser.style.border = "2px solid #62E74D";
+        btnEnvoyerCommande.disabled = false;
     } else {
         document.getElementById("validation_email").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Veuillez respecter le format email : mon_email@gmail.com.";
         mailUser.style.border = "2px solid #E74D4D";
+        btnEnvoyerCommande.disabled = true; 
     }
 };
 
@@ -274,4 +291,6 @@ codePostalUser.addEventListener("input", valChampCodePostal);
 villeUser.addEventListener("input", valChampVille);
 telephoneUser.addEventListener("input", valChampTelephone);
 mailUser.addEventListener("input", valChampMail);
+
+
 
