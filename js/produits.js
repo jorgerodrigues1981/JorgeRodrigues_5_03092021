@@ -6,6 +6,8 @@ const typeOption = document.getElementById("type_option");
 
 const monPanier = document.getElementById("mon_panier");
 
+const btnVoirPanier = document.getElementById("voir_panier");
+
 ////////////////////////////////////Ours en Peluche/////////////////////////////////////////////
 
 const url="http://localhost:3000/api/teddies";
@@ -89,8 +91,8 @@ if(produitLocalStorage) {
 }
 
     monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
-    au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
-
+    au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p>
+    <a href="panier.html"><p id="voir_panier">Voir panier<p></a></div></div>`;
   });
 
 })
@@ -122,7 +124,7 @@ fetch(urlCamera)
   //Injection dans le HTML dans la div "affichage_produit"
   containerProduit.innerHTML = produitCameras;
 
-  typeOption.innerHTML = " le lens :"
+  typeOption.innerHTML = " la lentille :"
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -180,7 +182,8 @@ if(produitLocalStorage) {
 }
 
 monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> avec l'option lens de <span class="text_souligne">${dataProduit.optionProduit}</span>
-au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
+au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p>
+<a href="panier.html"><p id="voir_panier">Voir panier<p></a></div>`;
 
   });
 
@@ -268,7 +271,8 @@ if(produitLocalStorage) {
 }
 
 monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
-au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p></div>`;
+au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataProduit.quantiteProduit}</span> € a été ajouté au panier !</p>
+<a href="panier.html"><p id="voir_panier">Voir panier<p></a></div></div>`;
 
   });
 
@@ -276,4 +280,3 @@ au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataPro
 .catch(err => { 
   console.log("Une erreur est survenue !");
 });
-

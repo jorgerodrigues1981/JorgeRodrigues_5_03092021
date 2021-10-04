@@ -359,21 +359,55 @@ footer li {
     cursor: pointer;
 }
 
-#btn_envoyer_commande {
-    background-color: #7AD03A;
-    font-weight: bold;
+
+#btn_confirmer_commande {
+    background-color: #3AD04F;
     color: white;
     margin: 10px;
     border: 1px solid white;
     border-radius: 10px;
     padding: 8px;
-    box-shadow: 1px 1px 6px #7AD03A;
+    box-shadow: 1px 1px 6px #3AD04F;
+    width: 300px;
+}
+
+#btn_confirmer_commande:hover {
+    background-color: #A7E7B0;
+    box-shadow: 3px 3px 6px #A7E7B0;
+    cursor: pointer;
+}
+
+#voir_panier {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: royalblue;
+    box-shadow: 1px 1px 6px royalblue;
+    color: white;
+    border: 1px solid rgb(154, 166, 202);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#voir_panier:hover {
+    background-color: rgb(114, 144, 235);
+}
+
+
+#btn_envoyer_commande {
+    background-color: #3AD04F;
+    color: white;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 1px 1px 6px #3AD04F;
 }
 
 #btn_envoyer_commande:hover {
-    background-color: #a0f0ab;
+    background-color: #A7E7B0;
     cursor: pointer;
-    box-shadow: 2px 2px 6px #a0f0ab;
+    box-shadow: 3px 3px 6px #A7E7B0;
 }
 
 #btn_envoyer_commande:disabled {

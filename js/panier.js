@@ -131,13 +131,7 @@ const afficherFormulaireCommande = () => {
                     </form>
                 </div>`;
 
-                articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
-    
-};
-
-//Afficher le formulaire
-afficherFormulaireCommande();
-
+               articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
 
 //Acceder aux champs du formulaire
 const nomUser = document.querySelector("#nom");
@@ -291,6 +285,28 @@ codePostalUser.addEventListener("input", valChampCodePostal);
 villeUser.addEventListener("input", valChampVille);
 telephoneUser.addEventListener("input", valChampTelephone);
 mailUser.addEventListener("input", valChampMail);
+
+};
+
+///////////////////////////////Bouton confirmer commande///////////////////////
+
+//Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
+const confirmerCommande = 
+`<div id="container_btn_supprimer"><button id="btn_confirmer_commande">Confirmer la commande</button></div>`;
+articlesPanier.insertAdjacentHTML("beforeend", confirmerCommande);
+
+//Acceder au bouton pour vider le panier
+const btnConfirmerCommande = document.getElementById("btn_confirmer_commande"); 
+const containerFormulaireCommande = document.getElementById("formulaire_confirmation");
+
+btnConfirmerCommande.addEventListener("click", (e) => {
+    e.preventDefault();
+    containerFormulaireCommande.innerHTML = afficherFormulaireCommande();
+    //Refresh de la page
+}, {once : true}); //Exécuter l'action une seule fois
+
+
+
 
 
 
