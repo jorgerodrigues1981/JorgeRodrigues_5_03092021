@@ -76,7 +76,6 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: top;
     padding: 10px;
     margin: 20px;
     border-radius: 10px;
@@ -283,7 +282,6 @@ footer li {
 #container_options {
     display: flex;
     flex-direction: column;
-    justify-content: top;
     align-items: center;
     width: 200px;
     margin: 20px;

@@ -305,9 +305,3 @@ btnConfirmerCommande.addEventListener("click", (e) => {
     containerFormulaireCommande.innerHTML = afficherFormulaireCommande();
     //Refresh de la page
 }, {once : true}); //Exécuter l'action une seule fois
-
-
-
-
-
-

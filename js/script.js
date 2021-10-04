@@ -1,9 +1,10 @@
+//Accéder au DOM
 const oursPeluche = document.getElementById("oursPeluche");
 const camerasVintage = document.getElementById("camerasVintage");
 const meublesChene = document.getElementById("meublesChene");
 
 
-////////////////////////////////////Ours en Peluche/////////////////////////////////////////////
+////////////////////////////////////OURS EN PELUCHE/////////////////////////////////////////////
 
 // Récupère les données de la API pour les Ours en Peluche
 fetch("http://localhost:3000/api/teddies")
@@ -16,8 +17,8 @@ fetch("http://localhost:3000/api/teddies")
 .then(data => {
     let listeOurs = " ";
 
-    //Boucle pour récupérer les données des produits - Ours en Peluche
-    for(let i = 0; i < data.length; i++) {
+//Boucle pour récupérer les données des produits - Ours en Peluche
+for(let i = 0; i < data.length; i++) {
     
     listeOurs +=
     `<div id="container_item">
@@ -33,10 +34,11 @@ fetch("http://localhost:3000/api/teddies")
 })
 // Message en cas d'erreur
 .catch(err => { 
+    oursPeluche.innerHTML = "Une erreur est survenue !"; 
     console.log("Une erreur est survenue !");
 });
 
-////////////////////////////////////Caméras Vintage/////////////////////////////////////////////
+////////////////////////////////////CAMéRAS VINTAGE/////////////////////////////////////////////
 
 // Récupère les données de la API pour les Caméras vintage
 fetch("http://localhost:3000/api/cameras")
@@ -68,10 +70,11 @@ fetch("http://localhost:3000/api/cameras")
 })
 // Message en cas d'erreur
 .catch(err => { 
+    camerasVintage.innerHTML = "Une erreur est survenue !";
     console.log("Une erreur est survenue !");
 });
 
-////////////////////////////////////Meubles en chêne/////////////////////////////////////////////
+////////////////////////////////////MEUBLES EN CHËNE/////////////////////////////////////////////
 
 // Récupère les données de la API pour les Meubles en chêne
 fetch("http://localhost:3000/api/furniture")
@@ -102,9 +105,6 @@ fetch("http://localhost:3000/api/furniture")
 })
 // Message en cas d'erreur
 .catch(err => { 
+    meublesChene.innerHTML = "Une erreur est survenue !"; 
     console.log("Une erreur est survenue !");
 });
-
-
-
-
