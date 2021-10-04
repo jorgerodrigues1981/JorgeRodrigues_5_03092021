@@ -168,12 +168,10 @@ const donneesEnvoyer = {
 
 window.location.href = "confirmation_commande.html"
 
-
 });
 
-//////
-const dataLocalStorage = localStorage.getItem("userInformationFormulaire");
 
+const dataLocalStorage = localStorage.getItem("userInformationFormulaire");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
 nomUser.value = dataLocalStorageObjet.nom;
@@ -186,7 +184,9 @@ mailUser.value = dataLocalStorageObjet.mail;
 
 
 //////////////////////Functions pour validation du formulaire//////////////////////////////////////////
+
 const validationNom = document.querySelector("#validation_nom");
+
 //Validation du nom
 function valChampNom(){
     if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(nomUser.value)) {
@@ -287,6 +287,7 @@ telephoneUser.addEventListener("input", valChampTelephone);
 mailUser.addEventListener("input", valChampMail);
 
 };
+
 
 ///////////////////////////////Bouton confirmer commande///////////////////////
 
