@@ -22,7 +22,7 @@ function itemOurs() {
         oursPeluche.innerHTML = peluches;
 
     }).catch(error => {
-        console.log("Une erreur est survenue !");
+        oursPeluche.innerHTML = "Une erreur est survenue !";
     })
 }
 
@@ -43,7 +43,7 @@ function itemCameras() {
         camerasVintage.innerHTML = cameras;
 
     }).catch(error => {
-        console.log("Une erreur est survenue !");
+        camerasVintage.innerHTML = "Une erreur est survenue !";
     })
 }
 
@@ -64,7 +64,7 @@ function itemMeubles() {
         meublesChene.innerHTML = meubles;
 
     }).catch(error => {
-        console.log("Une erreur est survenue !");
+        meublesChene.innerHTML = "Une erreur est survenue !";
     })
 }
 

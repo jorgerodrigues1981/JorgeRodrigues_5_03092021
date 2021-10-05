@@ -5,7 +5,6 @@ const containerBtnSupprimer = document.getElementById("container_btn_supprimer")
 
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-
 //Affichage de message quand le panier est vide 
 if(produitLocalStorage === null || produitLocalStorage == 0) {
     const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
@@ -21,6 +20,8 @@ if(produitLocalStorage === null || produitLocalStorage == 0) {
     `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${produitLocalStorage[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${produitLocalStorage[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${produitLocalStorage[k].prixProduit * produitLocalStorage[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`
     
     articlesPanier.innerHTML = structurePanier;
+
+    console.log("produitLocalStorage");
 
 ///////////////////////////Bouton supprimer l'article////////////////////////////
 
@@ -39,7 +40,6 @@ if(produitLocalStorage === null || produitLocalStorage == 0) {
         });
     }
 }
-
 };
 
 ///////////////////////////////Bouton pour vider le panier///////////////////////
@@ -60,7 +60,6 @@ btnViderPanier.addEventListener("click", (e) => {
     window.location.href = "panier.html"; 
 });
 
-
 //////////////////////////////Total du panier///////////////////////////////
 
 let prixTotalPanier = [];
@@ -78,7 +77,15 @@ const containerTotalPanierHtml = `
 <p id="panier_montant_total"><strong>Montant total a payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
 </div>`
 
+//Envoyer le prix total du panier dans le local storage
+localStorage.setItem("prixPanier", JSON.stringify(prixTotalPanier.reduce(reducer)));
+let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
+console.log(prixTotalProduits);
+
+//Ajoute le HTML du containerTotalPanierHtml
 articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
+
+
 
 /////////////////////////////////Formulaire commande////////////////////////////
 
@@ -157,19 +164,60 @@ const userInformationFormulaire = {
     mail: mailUser.value
 };
 
-console.log(userInformationFormulaire);
+//if(valChampNom() && valChampPrenom() && valChampAdresse() && valChampCodePostal() && valChampVille() && valChampTelephone() && valChampMail()) {
 
 localStorage.setItem("userInformationFormulaire", JSON.stringify(userInformationFormulaire));
 
+//Informations a envoyer
 const donneesEnvoyer = {
     produitLocalStorage,
     userInformationFormulaire
 }
 
+/////////////////////////////////////////////////////////////////
+//Envoyer les informations sur le server
+//const urlApi = ['http://localhost:3000/api/teddies', 'http://localhost:3000/api/cameras', 'http://localhost:3000/api/furnitures'];
+
+//for (let l = 0; l < urlApi.length; l++) {
+    //const boucleUrl = urlApi[l];  
+
+    //const promesse01 = fetch(boucleUrl + '/order', {
+    const promesse01 = fetch('https://jsonplaceholder.typicode.com/users', {
+        method: "POST",
+        body: JSON.stringify(donneesEnvoyer),
+        headers: {"Content-Type" : "application/json",},
+        })
+        
+        promesse01.then(async(response) => {
+           try {
+               console.log("response");
+               const contenu = await response.json();
+                    console.log("contenu");
+                    console.log(contenu);
+                    console.log(contenu.id);
+
+                    //Mettre le ID dans le local storage
+                    localStorage.setItem('response_id', contenu.id);
+
+                    if(response.ok) {
+                        console.log(`Resultat response.ok : ${response.ok}`);
+                    } else {
+                        console.log(`Réponse du server : ${response.status}`);
+                    }
+
+          } catch(e) {
+                console.log('ERREUR du catch');
+                console.log(e);
+            }
+        })
+//}
+    //};
+//////////////////////////////////////////////////////////
+
+//Envoie sur la page confirmation commande
 window.location.href = "confirmation_commande.html"
 
 });
-
 
 const dataLocalStorage = localStorage.getItem("userInformationFormulaire");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
@@ -288,7 +336,6 @@ mailUser.addEventListener("input", valChampMail);
 
 };
 
-
 ///////////////////////////////Bouton confirmer commande///////////////////////
 
 //Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
@@ -303,5 +350,5 @@ const containerFormulaireCommande = document.getElementById("formulaire_confirma
 btnConfirmerCommande.addEventListener("click", (e) => {
     e.preventDefault();
     containerFormulaireCommande.innerHTML = afficherFormulaireCommande();
-    //Refresh de la page
+   
 }, {once : true}); //Exécuter l'action une seule fois

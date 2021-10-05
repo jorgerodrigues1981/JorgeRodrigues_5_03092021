@@ -74,8 +74,6 @@ fetch(urlOurs)
 
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-console.log(produitLocalStorage);
-
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
   localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
@@ -84,10 +82,6 @@ if(produitLocalStorage) {
   produitLocalStorage = [];
   produitLocalStorage.push(dataProduit);
   localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
-  
- 
- console.log(produitLocalStorage);
- 
 }
 
     monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
@@ -164,9 +158,6 @@ fetch(urlCamera)
 
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-console.log(produitLocalStorage);
-
-
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
   localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
@@ -175,10 +166,6 @@ if(produitLocalStorage) {
   produitLocalStorage = [];
   produitLocalStorage.push(dataProduit);
   localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
-  
- 
- console.log(produitLocalStorage);
- 
 }
 
 monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> avec l'option lens de <span class="text_souligne">${dataProduit.optionProduit}</span>
@@ -189,7 +176,6 @@ au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataPro
 
 })
 .catch(err => { 
-  console.log("Une erreur est survenue !");
 });
 
 
@@ -278,5 +264,4 @@ au prix total de <span class="text_souligne">${dataProduit.prixProduit * dataPro
 
 })
 .catch(err => { 
-  console.log("Une erreur est survenue !");
 });

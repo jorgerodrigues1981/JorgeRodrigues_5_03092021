@@ -35,7 +35,6 @@ for(let i = 0; i < data.length; i++) {
 // Message en cas d'erreur
 .catch(err => { 
     oursPeluche.innerHTML = "Une erreur est survenue !"; 
-    console.log("Une erreur est survenue !");
 });
 
 ////////////////////////////////////CAMéRAS VINTAGE/////////////////////////////////////////////
@@ -71,7 +70,6 @@ fetch("http://localhost:3000/api/cameras")
 // Message en cas d'erreur
 .catch(err => { 
     camerasVintage.innerHTML = "Une erreur est survenue !";
-    console.log("Une erreur est survenue !");
 });
 
 ////////////////////////////////////MEUBLES EN CHËNE/////////////////////////////////////////////
@@ -106,5 +104,4 @@ fetch("http://localhost:3000/api/furniture")
 // Message en cas d'erreur
 .catch(err => { 
     meublesChene.innerHTML = "Une erreur est survenue !"; 
-    console.log("Une erreur est survenue !");
 });
