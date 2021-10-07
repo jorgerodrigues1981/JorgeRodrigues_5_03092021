@@ -72,16 +72,16 @@ fetch(urlOurs)
 
 //////////////////////////////Local Storage//////////////////////////////////////////////////
 
-let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let produitLocalStorage = JSON.parse(localStorage.getItem("products"));
 
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 
 } else {
   produitLocalStorage = [];
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 }
 
     monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>
@@ -156,16 +156,16 @@ fetch(urlCamera)
 
 //////////////////////////////Local Storage//////////////////////////////////////////////////
 
-let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let produitLocalStorage = JSON.parse(localStorage.getItem("products"));
 
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 
 } else {
   produitLocalStorage = [];
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 }
 
 monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> avec l'option lens de <span class="text_souligne">${dataProduit.optionProduit}</span>
@@ -244,16 +244,16 @@ fetch(urlMeuble)
 
 //////////////////////////////Local Storage//////////////////////////////////////////////////
 
-let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let produitLocalStorage = JSON.parse(localStorage.getItem("products"));
 
 if(produitLocalStorage) {
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 
 } else {
   produitLocalStorage = [];
   produitLocalStorage.push(dataProduit);
-  localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
+  localStorage.setItem("products", JSON.stringify(produitLocalStorage));
 }
 
 monPanier.innerHTML = `<div id="tableau_options"><p>Une quantité de <span class="text_souligne">${dataProduit.quantiteProduit}</span> article(s) <span class="text_souligne">"${dataProduit.nomProduit}"</span> de couleur <span class="text_souligne">${dataProduit.optionProduit}</span>

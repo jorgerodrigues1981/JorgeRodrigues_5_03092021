@@ -1,41 +1,39 @@
+//Permet de acceder au DOM
 const articlesPanier = document.getElementById("articles_panier");
 const totalPanier = document.getElementById("panier_montant_total");
 const btnSupprimer = document.getElementsByClassName("btn_supprimer");
 const containerBtnSupprimer = document.getElementById("container_btn_supprimer");
 
-let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
+
+//Envoie les produits dans le local storage
+let products = JSON.parse(localStorage.getItem("products"));
 
 //Affichage de message quand le panier est vide 
-if(produitLocalStorage === null || produitLocalStorage == 0) {
+if(products  === null || products  == 0) {
     const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
     articlesPanier.innerHTML = panierVide;
-    //Fait dispâraittre le bouton vider panier
+    //Fait dispâraitre le bouton vider panier
     articlesPanier.removeChild(); 
 } else {
     let structurePanier = [];
-    
-    for(let k = 0; k < produitLocalStorage.length; k++) {
-    
+    for(let k = 0; k < products.length; k++) {
     structurePanier = structurePanier + 
-    `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${produitLocalStorage[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${produitLocalStorage[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${produitLocalStorage[k].prixProduit * produitLocalStorage[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`
-    
+    `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${products[k].prixProduit * products[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
     articlesPanier.innerHTML = structurePanier;
-
-    console.log("produitLocalStorage");
-
+ 
 ///////////////////////////Bouton supprimer l'article////////////////////////////
 
 //Boucle pour acceder a tous les boutons supprimer
     for(let x = 0; x < btnSupprimer.length; x++ ) {
+        
         btnSupprimer[x].addEventListener("click", (event) => {
         event.preventDefault();
         
-        let idSupression = produitLocalStorage[x].idProduit;
-        
-        produitLocalStorage = produitLocalStorage.filter (
+        let idSupression = products[x].idProduit;
+        products = products.filter (
             (el) => el.idProduit !== idSupression
         );
-            localStorage.setItem ("produit", JSON.stringify(produitLocalStorage));
+            localStorage.setItem ("products", JSON.stringify(products));
             window.location.href = "panier.html"; //Refresh de la page
         });
     }
@@ -55,7 +53,7 @@ const btnViderPanier = document.getElementById("btn_vider_panier");
 btnViderPanier.addEventListener("click", (e) => {
     e.preventDefault();
     //Vider le localStorage
-    localStorage.removeItem("produit");
+    localStorage.removeItem("products");
     //Refresh de la page
     window.location.href = "panier.html"; 
 });
@@ -64,8 +62,8 @@ btnViderPanier.addEventListener("click", (e) => {
 
 let prixTotalPanier = [];
 
-for(let m = 0; m < produitLocalStorage.length; m++) {
-    let prixProduitPanier = produitLocalStorage[m].prixProduit * produitLocalStorage[m].quantiteProduit;
+for(let m = 0; m < products.length; m++) {
+    let prixProduitPanier = products[m].prixProduit * products[m].quantiteProduit;
 
     prixTotalPanier.push(prixProduitPanier);
 }
@@ -80,11 +78,9 @@ const containerTotalPanierHtml = `
 //Envoyer le prix total du panier dans le local storage
 localStorage.setItem("prixPanier", JSON.stringify(prixTotalPanier.reduce(reducer)));
 let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
-console.log(prixTotalProduits);
 
 //Ajoute le HTML du containerTotalPanierHtml
 articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
-
 
 
 /////////////////////////////////Formulaire commande////////////////////////////
@@ -112,21 +108,13 @@ const afficherFormulaireCommande = () => {
                             <textarea type="text" id="adresse" class="input_form" name="user_adresse" placeholder="Adresse" required="required"></textarea><br>    
                         </div>
                         <p id="validation_adresse" class="texte_validation"></p>
-                        <div class="champ_form">
-                            <label for="code_postal">Code postal <span class="asterisque_form">*</span></label>
-                            <input type="text" id="code_postal" class="input_form" name="user_code_postal" placeholder="Code Postal" required="required"><br>    
-                        </div>
-                        <p id="validation_code_postal" class="texte_validation"></p>
+                        
                         <div class="champ_form">
                             <label for="ville">Ville <span class="asterisque_form">*</span></label>
                             <input type="text" id="ville" class="input_form" name="user_ville" placeholder="Ville" required="required"><br>    
                         </div>
                         <p id="validation_ville" class="texte_validation"></p>
-                        <div class="champ_form">
-                            <label for="telephone">Téléphone <span class="asterisque_form">*</span></label>
-                            <input type="text" id="telephone" class="input_form" name="user_telephone" placeholder="Téléphone" required="required"><br>    
-                        </div>
-                        <p id="validation_telephone" class="texte_validation"></p>
+                        
                         <div class="champ_form">
                             <label for="mail">E-mail <span class="asterisque_form">*</span></label>
                             <input type="email" id="mail" class="input_form" name="user_mail" placeholder="E-mail" required="required">  
@@ -138,106 +126,107 @@ const afficherFormulaireCommande = () => {
                     </form>
                 </div>`;
 
-               articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
+articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
 
-//Acceder aux champs du formulaire
-const nomUser = document.querySelector("#nom");
-const prenomUser = document.querySelector("#prenom");
-const adresseUser = document.querySelector("#adresse");
-const codePostalUser = document.querySelector("#code_postal");
-const villeUser = document.querySelector("#ville");
-const telephoneUser = document.querySelector("#telephone");
-const mailUser = document.querySelector("#mail");
-const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
+    //Acceder aux champs du formulaire
+    const nomUser = document.querySelector("#nom");
+    const prenomUser = document.querySelector("#prenom");
+    const adresseUser = document.querySelector("#adresse");
+    //const codePostalUser = document.querySelector("#code_postal");
+    const villeUser = document.querySelector("#ville");
+    //const telephoneUser = document.querySelector("#telephone");
+    const mailUser = document.querySelector("#mail");
+    const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
 
+/////////////////BOUTON ENVOYER COMMANDE////////////////////////////////////////////////
 btnEnvoyerCommande.addEventListener("click", (event) => {
     event.preventDefault();
 
-/////////////////Recuperation des données du formulaire et les mettre dans localStorage
-const userInformationFormulaire = {
-    nom: nomUser.value,
-    prenom: prenomUser.value,
-    adresse: adresseUser.value,
-    codePostal: codePostalUser.value,
-    ville: villeUser.value,
-    telephone: telephoneUser.value,
-    mail: mailUser.value
-};
+    /////////////////Recuperation des données du formulaire et les mettre dans localStorage
+    const iDproducts = localStorage.getItem("products");
+    const dataProduitLocalStorage = JSON.parse(iDproducts);
 
-//if(valChampNom() && valChampPrenom() && valChampAdresse() && valChampCodePostal() && valChampVille() && valChampTelephone() && valChampMail()) {
+    //Recupère les id's des produits
+    const products = [];
 
-localStorage.setItem("userInformationFormulaire", JSON.stringify(userInformationFormulaire));
+    for(let y = 0; y < dataProduitLocalStorage.length; y++){
+        let productId = dataProduitLocalStorage[y].idProduit;
+        products.push(productId);
+    };
 
-//Informations a envoyer
-const donneesEnvoyer = {
-    produitLocalStorage,
-    userInformationFormulaire
-}
+    //Recupère les info du formulaire
+    const contact = {
+        firstName: prenomUser.value,
+        lastName: nomUser.value,
+        adress: adresseUser.value,
+        city: villeUser.value,
+        email: mailUser.value
+    };
 
-/////////////////////////////////////////////////////////////////
-//Envoyer les informations sur le server
-//const urlApi = ['http://localhost:3000/api/teddies', 'http://localhost:3000/api/cameras', 'http://localhost:3000/api/furnitures'];
+    //Informations a envoyer
+    const order = {
+        contact,
+        products
+    }
 
-//for (let l = 0; l < urlApi.length; l++) {
-    //const boucleUrl = urlApi[l];  
+    console.log(products);
+    console.log(contact);
 
-    //const promesse01 = fetch(boucleUrl + '/order', {
-    const promesse01 = fetch('https://jsonplaceholder.typicode.com/users', {
-        method: "POST",
-        body: JSON.stringify(donneesEnvoyer),
-        headers: {"Content-Type" : "application/json",},
-        })
-        
-        promesse01.then(async(response) => {
-           try {
-               console.log("response");
-               const contenu = await response.json();
-                    console.log("contenu");
-                    console.log(contenu);
-                    console.log(contenu.id);
+    //Envoyer les informations sur le server
+    const urlApi = ['http://localhost:3000/api/teddies', 'http://localhost:3000/api/cameras', 'http://localhost:3000/api/furniture'];
 
-                    //Mettre le ID dans le local storage
-                    localStorage.setItem('response_id', contenu.id);
-
+    for (let l = 0; l < urlApi.length; l++) {
+        const boucleUrl = urlApi[l]; 
+       
+        promisse01 = fetch(boucleUrl + '/order', {
+            method: "POST",
+            body: JSON.stringify(order),
+            headers: {'Content-Type': 'application/json'},
+            })
+            promisse01.then(async(res) => {
+                try {
+                    const contenu = await res.json();
+                    console.log("contenu de la response");
+                    console.log(contenu.orderId);
+    
                     if(response.ok) {
-                        console.log(`Resultat response.ok : ${response.ok}`);
+                        console.log(`contenu de la response:" ${res.ok}`);
+                        localStorage.setItem("responseId", contenu.orderId);
+
                     } else {
-                        console.log(`Réponse du server : ${response.status}`);
-                    }
+                        console.log(`response du server:" ${res.status}`)
+                    };  
+                } catch(e) {
+                    console.log("Erreur du Catch");
+                };
+            })      
+    //});
+       };
 
-          } catch(e) {
-                console.log('ERREUR du catch');
-                console.log(e);
-            }
-        })
-//}
-    //};
-//////////////////////////////////////////////////////////
+       //window.location.href = "confirmation_commande.html"
+    });
 
-//Envoie sur la page confirmation commande
-window.location.href = "confirmation_commande.html"
 
-});
-
-const dataLocalStorage = localStorage.getItem("userInformationFormulaire");
+const dataLocalStorage = localStorage.getItem("contact");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
-nomUser.value = dataLocalStorageObjet.nom;
-prenomUser.value = dataLocalStorageObjet.prenom;
-adresseUser.value = dataLocalStorageObjet.adresse;
-codePostalUser.value = dataLocalStorageObjet.codePostal;
-villeUser.value = dataLocalStorageObjet.ville;
-telephoneUser.value = dataLocalStorageObjet.telephone;
-mailUser.value = dataLocalStorageObjet.mail;
+nomUser.value = dataLocalStorageObjet.lastName;
+prenomUser.value = dataLocalStorageObjet.firstName;
+adresseUser.value = dataLocalStorageObjet.adress;
+//codePostalUser.value = dataLocalStorageObjet.codePostal;
+villeUser.value = dataLocalStorageObjet.city;
+//telephoneUser.value = dataLocalStorageObjet.telephone;
+mailUser.value = dataLocalStorageObjet.email;
 
 
 //////////////////////Functions pour validation du formulaire//////////////////////////////////////////
 
 const validationNom = document.querySelector("#validation_nom");
 
+//if(valChampNom() && valChampPrenom() && valChampAdresse() && valChampCodePostal() && valChampVille() && valChampTelephone() && valChampMail()) {
 //Validation du nom
 function valChampNom(){
-    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(nomUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(nomUser.value)) {
         document.getElementById("validation_nom").innerHTML = "";
         nomUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -250,7 +239,7 @@ function valChampNom(){
 
 //Validation du prénom
 function valChampPrenom(){
-    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,50}$/.test(prenomUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(prenomUser.value)) {
         document.getElementById("validation_prenom").innerHTML = "";
         prenomUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -263,7 +252,7 @@ function valChampPrenom(){
 
 //Validation de l'adresse
 function valChampAdresse(){
-    if(/^[A-Za-z0-9 _àâæçéèêëîïôœùûüÿ-]{3,200}$/.test(adresseUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(adresseUser.value)) {
         document.getElementById("validation_adresse").innerHTML = "";
         adresseUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -275,21 +264,21 @@ function valChampAdresse(){
 };
 
 //Validation du code postal
-function valChampCodePostal(){
+/*function valChampCodePostal(){
     if(/^[0-9]{5}$/.test(codePostalUser.value)) {
-        document.getElementById("validation_code_postal").innerHTML = "";
-        codePostalUser.style.border = "2px solid #62E74D";
-        btnEnvoyerCommande.disabled = false;
-    } else {
+       document.getElementById("validation_code_postal").innerHTML = "";
+       codePostalUser.style.border = "2px solid #62E74D";
+       btnEnvoyerCommande.disabled = false;
+   } else {
         document.getElementById("validation_code_postal").innerHTML = "Le code postal est un champ obligatoire. Veuillez le renseigner. Le code postal doit contenir 5 chiffres.";
         codePostalUser.style.border = "2px solid #E74D4D";
-        btnEnvoyerCommande.disabled = true;
-    }
-};
+       btnEnvoyerCommande.disabled = true;
+   }
+};*/
 
 //Validation de la ville
 function valChampVille(){
-    if(/^[A-Za-z _àâæçéèêëîïôœùûüÿ-]{3,100}$/.test(villeUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(villeUser.value)) {
         document.getElementById("validation_ville").innerHTML = "";
         villeUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -301,7 +290,7 @@ function valChampVille(){
 };
 
 //Validation téléphone
-function valChampTelephone(){
+/*function valChampTelephone(){
     if(/^[0-9]{9,20}$/.test(telephoneUser.value)) {
         document.getElementById("validation_telephone").innerHTML = "";
         telephoneUser.style.border = "2px solid #62E74D";
@@ -311,7 +300,7 @@ function valChampTelephone(){
         telephoneUser.style.border = "2px solid #E74D4D";
         btnEnvoyerCommande.disabled = true;
     }
-};
+};*/
 
 //Validation e-mail
 function valChampMail(){
@@ -329,13 +318,13 @@ function valChampMail(){
 nomUser.addEventListener("input", valChampNom);
 prenomUser.addEventListener("input", valChampPrenom);
 adresseUser.addEventListener("input", valChampAdresse);
-codePostalUser.addEventListener("input", valChampCodePostal);
+//codePostalUser.addEventListener("input", valChampCodePostal);
 villeUser.addEventListener("input", valChampVille);
-telephoneUser.addEventListener("input", valChampTelephone);
+//telephoneUser.addEventListener("input", valChampTelephone);
 mailUser.addEventListener("input", valChampMail);
 
 };
-
+//};
 ///////////////////////////////Bouton confirmer commande///////////////////////
 
 //Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
