@@ -34,4 +34,7 @@ const contenuMessageConfirmation = `
 
 messageConfirmation.innerHTML = contenuMessageConfirmation;
 
+////////////////////////////////////////////////////////
 
+
+//localStorage.clear("products");

@@ -108,13 +108,11 @@ const afficherFormulaireCommande = () => {
                             <textarea type="text" id="adresse" class="input_form" name="user_adresse" placeholder="Adresse" required="required"></textarea><br>    
                         </div>
                         <p id="validation_adresse" class="texte_validation"></p>
-                        
                         <div class="champ_form">
                             <label for="ville">Ville <span class="asterisque_form">*</span></label>
-                            <input type="text" id="ville" class="input_form" name="user_ville" placeholder="Ville" required="required"><br>    
+                            <input type="text" rows="5" id="ville" class="input_form" name="user_ville" placeholder="Ville" required="required"><br>    
                         </div>
                         <p id="validation_ville" class="texte_validation"></p>
-                        
                         <div class="champ_form">
                             <label for="mail">E-mail <span class="asterisque_form">*</span></label>
                             <input type="email" id="mail" class="input_form" name="user_mail" placeholder="E-mail" required="required">  
@@ -132,19 +130,22 @@ articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
     const nomUser = document.querySelector("#nom");
     const prenomUser = document.querySelector("#prenom");
     const adresseUser = document.querySelector("#adresse");
+    const codePostalUser = document.querySelector("#codePostal");
     const villeUser = document.querySelector("#ville");
     const mailUser = document.querySelector("#mail");
     const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
 
+
 /////////////////BOUTON ENVOYER COMMANDE////////////////////////////////////////////////
+
 btnEnvoyerCommande.addEventListener("click", (event) => {
     event.preventDefault();
 
-    /////////////////Recuperation des données du formulaire et les mettre dans localStorage
+//Recuperation des données du formulaire et les mettre dans localStorage
     const iDproducts = localStorage.getItem("products");
     const dataProduitLocalStorage = JSON.parse(iDproducts);
 
-    //Recupère les id's des produits
+//Recupère les id's des produits
     const products = [];
 
     for(let y = 0; y < dataProduitLocalStorage.length; y++){
@@ -152,8 +153,7 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
         products.push(productId);
     };
 
-
-    //Recupère les info du formulaire
+//Recupère les info du formulaire
     const contact = {
         firstName: prenomUser.value,
         lastName: nomUser.value,
@@ -162,17 +162,17 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
         email: mailUser.value
     }
 
-    localStorage.setItem("contact", JSON.stringify(contact));
+        localStorage.setItem("contact", JSON.stringify(contact));
+    
 
-    //Informations a envoyer
+//Informations a envoyer sur le server
     const order = {products, contact};
 
-    console.log("contenu de order:");
-    console.log(order);
+//Envoyer les informations sur le server
 
-    //Envoyer les informations sur le server
-    const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
-    //Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
+const urlApi = ['http://localhost:3000/api/teddies/order'];
+
+//Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
         for (let i = 0; i < urlApi.length; i++) {
         const boucleUrl = urlApi[i]; 
         const promisse01 = fetch(boucleUrl, {
@@ -189,7 +189,7 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
                     if(res.ok) {
                         console.log(`contenu de la response: ${res.ok}`);
                         localStorage.setItem("commande", contenu.orderId);
-                        
+                        window.location.href = "confirmation_commande.html";
                     } else {
                         console.log(`response du server:" ${res.status}`)
                     };  
@@ -197,11 +197,10 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
                 };
             })     
         };
-        //Envoie dans la page confirmation commande
-        window.location.href = "confirmation_commande.html"
+    
 });
 
-
+////////////////////////////Prè-remplissage des champs des formulaires////////////////////////////////////
 const dataLocalStorage = localStorage.getItem("contact");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
@@ -210,9 +209,9 @@ prenomUser.value = dataLocalStorageObjet.firstName;
 adresseUser.value = dataLocalStorageObjet.address;
 villeUser.value = dataLocalStorageObjet.city;
 mailUser.value = dataLocalStorageObjet.email;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////Functions pour validation du formulaire//////////////////////////////////////////
+//////////////////////Validation du formulaire//////////////////////////////////////////
 
 const validationNom = document.querySelector("#validation_nom");
 
@@ -244,7 +243,7 @@ function valChampPrenom(){
 
 //Validation de l'adresse
 function valChampAdresse(){
-    if(/^[a-zA-Z0-9_éèàùç ]*$/.test(adresseUser.value)) {
+    if(/[a-zA-ZÀ-ÿ-0-9 ]$/.test(adresseUser.value)) {
         document.getElementById("validation_adresse").innerHTML = "";
         adresseUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -275,7 +274,7 @@ function valChampMail(){
         mailUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
     } else {
-        document.getElementById("validation_email").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Veuillez respecter le format email : mon_email@gmail.com.";
+        document.getElementById("validation_email").innerHTML = "Le e-mail est un champ obligatoire. Veuillez le renseigner. Veuillez respecter le format email : mon_email@gmail.com.";
         mailUser.style.border = "2px solid #E74D4D";
         btnEnvoyerCommande.disabled = true; 
     }
@@ -289,7 +288,7 @@ mailUser.addEventListener("input", valChampMail);
 
 };
 
-///////////////////////////////Bouton confirmer commande///////////////////////
+///////////////////////////////Bouton confirmer commande/////////////////////////////
 
 //Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
 const confirmerCommande = 
@@ -303,5 +302,7 @@ const containerFormulaireCommande = document.getElementById("formulaire_confirma
 btnConfirmerCommande.addEventListener("click", (e) => {
     e.preventDefault();
     containerFormulaireCommande.innerHTML = afficherFormulaireCommande();
-   
-}, {once : true}); //Exécuter l'action une seule fois
+//Exécuter l'action une seule fois
+}, {once : true}); 
+
+/////////////////////////////////////////////////////////////////////////////////////////

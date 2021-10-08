@@ -460,6 +460,10 @@ footer li {
     color: crimson;
 }
 
+#adresse {
+    height: 50px;
+}
+
 #formulaire_commande {
     background-color:#F3E9F1;
     padding: 20px;
