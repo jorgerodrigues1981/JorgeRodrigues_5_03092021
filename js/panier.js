@@ -170,7 +170,7 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
 
 //Envoyer les informations sur le server
 
-const urlApi = ['http://localhost:3000/api/teddies/order'];
+const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
 
 //Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
         for (let i = 0; i < urlApi.length; i++) {
