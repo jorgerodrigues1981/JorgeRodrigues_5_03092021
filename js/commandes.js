@@ -19,9 +19,7 @@ const dataUtilisateurObjet = JSON.parse(localStorage.getItem("contact"));
 let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
 
 //////////////Local Storage - ID commande/////////////////////////////
-let orderId = JSON.parse(localStorage.getItem("responseId"));
-
-console.log(orderId);
+const commande = localStorage.getItem("commande");
 
 //Message de confirmation de commande
 
@@ -29,9 +27,11 @@ const messageConfirmation = document.querySelector("#message_confirmation");
 
 const contenuMessageConfirmation = `
 <p>Merci pour votre commande <strong>${dataUtilisateurObjet.lastName}, ${dataUtilisateurObjet.firstName}</strong> !</p>
-
-<p>Votre commande <strong>(ID: )</strong> des articles :<br> <strong>${produitsDansCommande.join(" ; ")}<br></strong> dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
+<p>Numéro de la commande: <strong>${commande}</strong> 
+<p>Votre commande des articles :<br> <strong>${produitsDansCommande.join(" ; ")}<br></strong> dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
 <p>Merci de nous avoir choisi !<br><br>`;
 
 
 messageConfirmation.innerHTML = contenuMessageConfirmation;
+
+

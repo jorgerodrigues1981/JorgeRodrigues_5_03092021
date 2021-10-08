@@ -132,9 +132,7 @@ articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
     const nomUser = document.querySelector("#nom");
     const prenomUser = document.querySelector("#prenom");
     const adresseUser = document.querySelector("#adresse");
-    //const codePostalUser = document.querySelector("#code_postal");
     const villeUser = document.querySelector("#ville");
-    //const telephoneUser = document.querySelector("#telephone");
     const mailUser = document.querySelector("#mail");
     const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
 
@@ -154,31 +152,30 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
         products.push(productId);
     };
 
+
     //Recupère les info du formulaire
     const contact = {
         firstName: prenomUser.value,
         lastName: nomUser.value,
-        adress: adresseUser.value,
+        address: adresseUser.value,
         city: villeUser.value,
         email: mailUser.value
-    };
-
-    //Informations a envoyer
-    const order = {
-        contact,
-        products
     }
 
-    console.log(products);
-    console.log(contact);
+    localStorage.setItem("contact", JSON.stringify(contact));
+
+    //Informations a envoyer
+    const order = {products, contact};
+
+    console.log("contenu de order:");
+    console.log(order);
 
     //Envoyer les informations sur le server
-    const urlApi = ['http://localhost:3000/api/teddies', 'http://localhost:3000/api/cameras', 'http://localhost:3000/api/furniture'];
-
-    for (let l = 0; l < urlApi.length; l++) {
-        const boucleUrl = urlApi[l]; 
-       
-        promisse01 = fetch(boucleUrl + '/order', {
+    const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
+    //Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
+        for (let i = 0; i < urlApi.length; i++) {
+        const boucleUrl = urlApi[i]; 
+        const promisse01 = fetch(boucleUrl, {
             method: "POST",
             body: JSON.stringify(order),
             headers: {'Content-Type': 'application/json'},
@@ -186,25 +183,23 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
             promisse01.then(async(res) => {
                 try {
                     const contenu = await res.json();
-                    console.log("contenu de la response");
+                    console.log("contenu.orderId");
                     console.log(contenu.orderId);
-    
-                    if(response.ok) {
-                        console.log(`contenu de la response:" ${res.ok}`);
-                        localStorage.setItem("responseId", contenu.orderId);
 
+                    if(res.ok) {
+                        console.log(`contenu de la response: ${res.ok}`);
+                        localStorage.setItem("commande", contenu.orderId);
+                        
                     } else {
                         console.log(`response du server:" ${res.status}`)
                     };  
                 } catch(e) {
-                    console.log("Erreur du Catch");
                 };
-            })      
-    //});
-       };
-
-       //window.location.href = "confirmation_commande.html"
-    });
+            })     
+        };
+        //Envoie dans la page confirmation commande
+        window.location.href = "confirmation_commande.html"
+});
 
 
 const dataLocalStorage = localStorage.getItem("contact");
@@ -212,10 +207,8 @@ const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
 nomUser.value = dataLocalStorageObjet.lastName;
 prenomUser.value = dataLocalStorageObjet.firstName;
-adresseUser.value = dataLocalStorageObjet.adress;
-//codePostalUser.value = dataLocalStorageObjet.codePostal;
+adresseUser.value = dataLocalStorageObjet.address;
 villeUser.value = dataLocalStorageObjet.city;
-//telephoneUser.value = dataLocalStorageObjet.telephone;
 mailUser.value = dataLocalStorageObjet.email;
 
 
@@ -223,7 +216,6 @@ mailUser.value = dataLocalStorageObjet.email;
 
 const validationNom = document.querySelector("#validation_nom");
 
-//if(valChampNom() && valChampPrenom() && valChampAdresse() && valChampCodePostal() && valChampVille() && valChampTelephone() && valChampMail()) {
 //Validation du nom
 function valChampNom(){
     if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(nomUser.value)) {
@@ -252,7 +244,7 @@ function valChampPrenom(){
 
 //Validation de l'adresse
 function valChampAdresse(){
-    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(adresseUser.value)) {
+    if(/^[a-zA-Z0-9_éèàùç ]*$/.test(adresseUser.value)) {
         document.getElementById("validation_adresse").innerHTML = "";
         adresseUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -262,19 +254,6 @@ function valChampAdresse(){
         btnEnvoyerCommande.disabled = true;
     }
 };
-
-//Validation du code postal
-/*function valChampCodePostal(){
-    if(/^[0-9]{5}$/.test(codePostalUser.value)) {
-       document.getElementById("validation_code_postal").innerHTML = "";
-       codePostalUser.style.border = "2px solid #62E74D";
-       btnEnvoyerCommande.disabled = false;
-   } else {
-        document.getElementById("validation_code_postal").innerHTML = "Le code postal est un champ obligatoire. Veuillez le renseigner. Le code postal doit contenir 5 chiffres.";
-        codePostalUser.style.border = "2px solid #E74D4D";
-       btnEnvoyerCommande.disabled = true;
-   }
-};*/
 
 //Validation de la ville
 function valChampVille(){
@@ -288,19 +267,6 @@ function valChampVille(){
         btnEnvoyerCommande.disabled = true;
     }
 };
-
-//Validation téléphone
-/*function valChampTelephone(){
-    if(/^[0-9]{9,20}$/.test(telephoneUser.value)) {
-        document.getElementById("validation_telephone").innerHTML = "";
-        telephoneUser.style.border = "2px solid #62E74D";
-        btnEnvoyerCommande.disabled = false;
-    } else {
-        document.getElementById("validation_telephone").innerHTML = "Le téléphone est un champ obligatoire. Veuillez le renseigner. Le numéro de téléphone ne doit contenir que des chiffres.";
-        telephoneUser.style.border = "2px solid #E74D4D";
-        btnEnvoyerCommande.disabled = true;
-    }
-};*/
 
 //Validation e-mail
 function valChampMail(){
@@ -318,13 +284,11 @@ function valChampMail(){
 nomUser.addEventListener("input", valChampNom);
 prenomUser.addEventListener("input", valChampPrenom);
 adresseUser.addEventListener("input", valChampAdresse);
-//codePostalUser.addEventListener("input", valChampCodePostal);
 villeUser.addEventListener("input", valChampVille);
-//telephoneUser.addEventListener("input", valChampTelephone);
 mailUser.addEventListener("input", valChampMail);
 
 };
-//};
+
 ///////////////////////////////Bouton confirmer commande///////////////////////
 
 //Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
