@@ -162,7 +162,7 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
         email: mailUser.value
     }
 
-        localStorage.setItem("contact", JSON.stringify(contact));
+    localStorage.setItem("contact", JSON.stringify(contact));
     
 
 //Informations a envoyer sur le server
@@ -197,10 +197,9 @@ const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:300
                 };
             })     
         };
-    
 });
 
-////////////////////////////Prè-remplissage des champs des formulaires////////////////////////////////////
+////////////////////////////Prè-remplissage des champs des formulaires avec les données du Local Storage////////////////////////////////////
 const dataLocalStorage = localStorage.getItem("contact");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
