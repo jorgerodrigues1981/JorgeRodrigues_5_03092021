@@ -8,8 +8,20 @@ const containerBtnSupprimer = document.getElementById("container_btn_supprimer")
 //Envoie les produits dans le local storage
 let products = JSON.parse(localStorage.getItem("products"));
 
+//Function pour vérifier si le panier est vide
+function panierVide() {
+    if(products === null || products == 0) {
+        console.log("panier vide = true");
+        return false;
+    } else {
+        console.log("panier vide = false");
+        return true;
+    };
+}
+
+
 //Affichage de message quand le panier est vide 
-if(products  === null || products  == 0) {
+if(panierVide() == false) {
     const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
     articlesPanier.innerHTML = panierVide;
     //Fait dispâraitre le bouton vider panier
@@ -20,7 +32,7 @@ if(products  === null || products  == 0) {
     structurePanier = structurePanier + 
     `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${products[k].prixProduit * products[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
     articlesPanier.innerHTML = structurePanier;
- 
+
 ///////////////////////////Bouton supprimer l'article////////////////////////////
 
 //Boucle pour acceder a tous les boutons supprimer
