@@ -142,7 +142,6 @@ articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
     const nomUser = document.querySelector("#nom");
     const prenomUser = document.querySelector("#prenom");
     const adresseUser = document.querySelector("#adresse");
-    const codePostalUser = document.querySelector("#codePostal");
     const villeUser = document.querySelector("#ville");
     const mailUser = document.querySelector("#mail");
     const btnEnvoyerCommande = document.querySelector("#btn_envoyer_commande");
@@ -182,7 +181,7 @@ btnEnvoyerCommande.addEventListener("click", (event) => {
 
 //Envoyer les informations sur le server
 
-const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
+/*const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
 
 //Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
         for (let i = 0; i < urlApi.length; i++) {
@@ -195,9 +194,9 @@ const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:300
             promisse01.then(async(res) => {
                 try {
                     const contenu = await res.json();
+                    console.log(res);
                     console.log("contenu.orderId");
                     console.log(contenu.orderId);
-
                     if(res.ok) {
                         console.log(`contenu de la response: ${res.ok}`);
                         localStorage.setItem("commande", contenu.orderId);
@@ -207,9 +206,89 @@ const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:300
                     };  
                 } catch(e) {
                 };
-            })     
-        };
+            });
+    }; */
+
+function fetchOurs() {
+    const promisse01 = fetch('http://localhost:3000/api/teddies/order', {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {'Content-Type': 'application/json'},
+        })
+        promisse01.then(async(res) => {
+            try {
+                const contenu = await res.json();
+                console.log(res);
+                console.log("contenu.orderId");
+                console.log(contenu.orderId);
+                if(res.ok) {
+                    console.log(`contenu de la response: ${res.ok}`);
+                    localStorage.setItem("commande", contenu.orderId);
+                    window.location.href = "confirmation_commande.html";
+                } else {
+                    console.log(`response du server:" ${res.status}`)
+                };  
+            } catch(e) {
+            };
+        });
+};
+
+function fetchCameras() {
+    const promisse01 = fetch('http://localhost:3000/api/cameras/order', {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {'Content-Type': 'application/json'},
+        })
+        promisse01.then(async(res) => {
+            try {
+                const contenu = await res.json();
+                console.log(res);
+                console.log("contenu.orderId");
+                console.log(contenu.orderId);
+                if(res.ok) {
+                    console.log(`contenu de la response: ${res.ok}`);
+                    localStorage.setItem("commande", contenu.orderId);
+                    window.location.href = "confirmation_commande.html";
+                } else {
+                    console.log(`response du server:" ${res.status}`)
+                };  
+            } catch(e) {
+            };
+        });
+};
+
+function fetchFurniture() {
+    const promisse01 = fetch('http://localhost:3000/api/furniture/order', {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {'Content-Type': 'application/json'},
+        })
+        promisse01.then(async(res) => {
+            try {
+                const contenu = await res.json();
+                console.log(res);
+                console.log("contenu.orderId");
+                console.log(contenu.orderId);
+                if(res.ok) {
+                    console.log(`contenu de la response: ${res.ok}`);
+                    localStorage.setItem("commande", contenu.orderId);
+                    window.location.href = "confirmation_commande.html";
+                } else {
+                    console.log(`response du server:" ${res.status}`)
+                };  
+            } catch(e) {
+            };
+        });
+};
+
+fetchOurs();
+fetchCameras();
+fetchFurniture();
+//}; 
+/////////////////  
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////Prè-remplissage des champs des formulaires avec les données du Local Storage////////////////////////////////////
 const dataLocalStorage = localStorage.getItem("contact");

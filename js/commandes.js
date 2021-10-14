@@ -42,8 +42,8 @@ function effacerCleLocalStorage(key) {
 
 effacerCleLocalStorage("prixPanier");
 effacerCleLocalStorage("products");
-effacerCleLocalStorage("commande");
+effacerCleLocalStorage("commandeOurs");
 
-if(commande == null || prixPanier == null) {
-  window.location.href="index.html";
-}
+//if(commande == null || prixPanier == null) {
+//  window.location.href="index.html";
+//}

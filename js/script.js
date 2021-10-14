@@ -3,74 +3,73 @@ const oursPeluche = document.getElementById("oursPeluche");
 const camerasVintage = document.getElementById("camerasVintage");
 const meublesChene = document.getElementById("meublesChene");
 
-
 ////////////////////////////////////OURS EN PELUCHE/////////////////////////////////////////////
 
 // Récupère les données de la API pour les Ours en Peluche
-fetch("http://localhost:3000/api/teddies")
-.then(res => {
-    if(res.ok){
-        return res.json();
-    } else {
-    }
-}) 
-.then(data => {
-    let listeOurs = " ";
-
-//Boucle pour récupérer les données des produits - Ours en Peluche
-for(let i = 0; i < data.length; i++) {
+    fetch("http://localhost:3000/api/teddies")
+    .then(res => {
+        if(res.ok){
+            return res.json();
+        } else {
+            console.log("Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !");
+        }
+    }) 
+    .then(data => {
+        let listeOurs = " ";
     
-    listeOurs +=
-    `<div id="container_item">
-    <a href="produit.html?${data[i]._id}">
-    <h1>${data[i].name}</h1>
-    <img src="${data[i].imageUrl}">
-    <p>${data[i].price / 100} €<p>
-    <p>
-    </a></div>`
-    };
-    
-    oursPeluche.innerHTML = listeOurs; 
-})
-// Message en cas d'erreur
-.catch(err => { 
-    oursPeluche.innerHTML = "Une erreur est survenue !"; 
-});
+    //Boucle pour récupérer les données des produits - Ours en Peluche
+    for(let i = 0; i < data.length; i++) {
+        
+        listeOurs +=
+        `<div id="container_item">
+        <a href="produit.html?${data[i]._id}">
+        <h1>${data[i].name}</h1>
+        <img src="${data[i].imageUrl}">
+        <p>${data[i].price / 100} €<p>
+        <p>
+        </a></div>`
+        };
+        //Affichage des produit sur la page
+        oursPeluche.innerHTML = listeOurs; 
+    })
+    // Message en cas d'erreur
+    .catch(err => { 
+        oursPeluche.innerHTML = "Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !"; 
+    });
 
 ////////////////////////////////////CAMéRAS VINTAGE/////////////////////////////////////////////
 
 // Récupère les données de la API pour les Caméras vintage
-fetch("http://localhost:3000/api/cameras")
-.then(res => {
-    if(res.ok){
-        return res.json();
-    } else {
-        console.log("erreur");
-    }
-}) 
-.then(data => {
+    fetch("http://localhost:3000/api/cameras")
+    .then(res => {
+        if(res.ok){
+            return res.json();
+        } else {
+            console.log("Une erreur est survenue ! Les caméras sont pas disponibles pour le moment !");
+        }
+    }) 
+    .then(data => {
+        
+        let listeCameras = " ";
     
-    let listeCameras = " ";
-
-    //Boucle pour récupérer les données des produits - Caméras vintage
-    for(let i = 0; i < data.length; i++) {
-    
-    listeCameras +=
-    `<div id="container_item">
-    <a href="produit.html?${data[i]._id}">
-    <h1>${data[i].name}</h1>
-    <img src="${data[i].imageUrl}">
-    <p>${data[i].price / 100} €<p>
-    <p>
-    </a></div>`
-    };
-    
-    camerasVintage.innerHTML = listeCameras; 
-})
-// Message en cas d'erreur
-.catch(err => { 
-    camerasVintage.innerHTML = "Une erreur est survenue !";
-});
+        //Boucle pour récupérer les données des produits - Caméras vintage
+        for(let i = 0; i < data.length; i++) {
+        
+        listeCameras +=
+        `<div id="container_item">
+        <a href="produit.html?${data[i]._id}">
+        <h1>${data[i].name}</h1>
+        <img src="${data[i].imageUrl}">
+        <p>${data[i].price / 100} €<p>
+        <p>
+        </a></div>`
+        };
+        camerasVintage.innerHTML = listeCameras;
+    })
+    // Message en cas d'erreur
+    .catch(err => { 
+        camerasVintage.innerHTML = "Une erreur est survenue ! Les caméras sont pas disponibles pour le moment !!!";
+    });
 
 ////////////////////////////////////MEUBLES EN CHËNE/////////////////////////////////////////////
 
@@ -80,12 +79,11 @@ fetch("http://localhost:3000/api/furniture")
     if(res.ok){
         return res.json();
     } else {
-        console.log("erreur");
+        console.log("Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !");
     }
 }) 
 .then(data => {
     let listeMeubles = " ";
-
     //Boucle pour récupérer les données des produits - Meubles en chêne
     for(let i = 0; i < data.length; i++) {
     
@@ -98,10 +96,10 @@ fetch("http://localhost:3000/api/furniture")
     <p>
     </a></div>`
     };
-    
+    //Affichage des produit sur la page
     meublesChene.innerHTML = listeMeubles; 
 })
-// Message en cas d'erreur
+//Message en cas d'erreur
 .catch(err => { 
-    meublesChene.innerHTML = "Une erreur est survenue !"; 
+    meublesChene.innerHTML = "Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !"; 
 });
