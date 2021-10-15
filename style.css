@@ -472,7 +472,7 @@ footer li {
 #form_donnees_commande {
     display: flex;
     flex-direction: column;
-    background-color: #7c7c7c;
+    background-color: #cfcccf;
     padding: 20px;
 }
 
