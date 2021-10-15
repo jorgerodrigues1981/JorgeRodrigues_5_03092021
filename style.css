@@ -472,6 +472,7 @@ footer li {
 #form_donnees_commande {
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
     background-color: #cfcccf;
     padding: 20px;
 }
@@ -491,7 +492,7 @@ footer li {
 }
 
 #message_confirmation {
-    background-color: #C2C8C2;
+    background-color: #cfcccf;
     width: 60%;
     padding: 20px;
     margin: 20px;
