@@ -7,10 +7,8 @@ const dataProduitLocalStorage = JSON.parse(produitLocalStorage);
 //Function pour vérifier s'il ya des produits dans le panier
 function verifierPanier() {
     if(dataProduitLocalStorage === null || dataProduitLocalStorage == 0) {
-        console.log("panier vide = true");
         return false;
     } else {
-        console.log("panier vide = false");
         return true;
     };
 }

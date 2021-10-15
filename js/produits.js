@@ -56,7 +56,7 @@ function fetchOurs() {
     //Bouton pour ajouter le produit au panier
     buttonAjouter.addEventListener("click", (event) => {
       event.preventDefault();
-  
+    //Recupère les options du produit et quantité
       const optionChoisi = listeOptions.value;
       const quantiteChoisi = quantiteProduits.value;
   
@@ -126,9 +126,9 @@ function fetchCameras() {
   
     let listeOptionsCamera = [];
   
-    for(let j = 0; j < choisirLens.length; j++) {
+    for(let i = 0; i < choisirLens.length; i++) {
       listeOptionsCamera = listeOptionsCamera + 
-      `<option value="${choisirLens[j]}">${choisirLens[j]}</option>`
+      `<option value="${choisirLens[i]}">${choisirLens[i]}</option>`
     }
   
     //Injecter la boucle dans le HTML
@@ -139,7 +139,7 @@ function fetchCameras() {
   
     buttonAjouter.addEventListener("click", (event) => {
       event.preventDefault();
-  
+    //Recupère les options du produit et quantité
       const optionChoisi = listeOptions.value;
       const quantiteChoisi = quantiteProduits.value;
   
@@ -223,7 +223,7 @@ function fetchMeubles() {
   //Bouton pour ajouter le produit au panier
   buttonAjouter.addEventListener("click", (event) => {
     event.preventDefault();
-  
+  //Recupère les options du produit et quantité
     const optionChoisi = listeOptions.value;
     const quantiteChoisi = quantiteProduits.value;
   

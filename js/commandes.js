@@ -28,7 +28,7 @@ const messageConfirmation = document.querySelector("#message_confirmation");
 const contenuMessageConfirmation = `
 <p>Merci pour votre commande <strong>${dataUtilisateurObjet.lastName}, ${dataUtilisateurObjet.firstName}</strong> !</p>
 <p>Numéro de la commande: <strong>${commande}</strong> 
-<p>Votre commande des articles dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
+<p>Votre commande dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
 <p>Merci de nous avoir choisi !<br><br>`;
 
 
@@ -42,8 +42,8 @@ function effacerCleLocalStorage(key) {
 
 effacerCleLocalStorage("prixPanier");
 effacerCleLocalStorage("products");
-effacerCleLocalStorage("commandeOurs");
+effacerCleLocalStorage("commande");
 
-//if(commande == null || prixPanier == null) {
-//  window.location.href="index.html";
-//}
+if(commande == null || prixPanier == null) {
+ window.location.href="index.html";
+}

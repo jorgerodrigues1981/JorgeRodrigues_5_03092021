@@ -19,7 +19,6 @@ function panierVide() {
     };
 }
 
-
 //Affichage de message quand le panier est vide 
 if(panierVide() == false) {
     const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
@@ -70,6 +69,8 @@ btnViderPanier.addEventListener("click", (e) => {
     window.location.href = "panier.html"; 
 });
 
+
+
 //////////////////////////////Total du panier///////////////////////////////
 
 let prixTotalPanier = [];
@@ -82,9 +83,10 @@ for(let m = 0; m < products.length; m++) {
 
 const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
+//Afficher le montant total a payer
 const containerTotalPanierHtml = `
 <div id="container_total_panier" class="data_panier">
-<p id="panier_montant_total"><strong>Montant total a payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
+<p id="panier_montant_total"><strong>Montant total à payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
 </div>`
 
 //Envoyer le prix total du panier dans le local storage
@@ -93,7 +95,6 @@ let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
 
 //Ajoute le HTML du containerTotalPanierHtml
 articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
-
 
 /////////////////////////////////Formulaire commande////////////////////////////
 
@@ -138,7 +139,7 @@ const afficherFormulaireCommande = () => {
 
 articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
 
-    //Acceder aux champs du formulaire
+//Accéder aux champs du formulaire
     const nomUser = document.querySelector("#nom");
     const prenomUser = document.querySelector("#prenom");
     const adresseUser = document.querySelector("#adresse");
@@ -148,149 +149,204 @@ articlesPanier.insertAdjacentHTML("beforeend", formulaireHtml);
 
 
 /////////////////BOUTON ENVOYER COMMANDE////////////////////////////////////////////////
-
+//Bouton envoyer commande
 btnEnvoyerCommande.addEventListener("click", (event) => {
     event.preventDefault();
 
-//Recuperation des données du formulaire et les mettre dans localStorage
-    const iDproducts = localStorage.getItem("products");
-    const dataProduitLocalStorage = JSON.parse(iDproducts);
-
-//Recupère les id's des produits
-    const products = [];
-
-    for(let y = 0; y < dataProduitLocalStorage.length; y++){
-        let productId = dataProduitLocalStorage[y].idProduit;
-        products.push(productId);
-    };
-
 //Recupère les info du formulaire
-    const contact = {
-        firstName: prenomUser.value,
-        lastName: nomUser.value,
-        address: adresseUser.value,
-        city: villeUser.value,
-        email: mailUser.value
-    }
+const contact = {
+    firstName: prenomUser.value,
+    lastName: nomUser.value,
+    address: adresseUser.value,
+    city: villeUser.value,
+    email: mailUser.value
+}
 
-    localStorage.setItem("contact", JSON.stringify(contact));
+//Envoie des données du formulaire dans le Local Storage
+localStorage.setItem("contact", JSON.stringify(contact));
     
-
 //Informations a envoyer sur le server
-    const order = {products, contact};
+const order = {products, contact};
 
-//Envoyer les informations sur le server
+//////////////////////////////Méthode POST///////////////////////////////////
 
-/*const urlApi = ['http://localhost:3000/api/teddies/order', 'http://localhost:3000/api/cameras/order', 'http://localhost:3000/api/furniture/order'];
-
-//Boucle pour aller chercher les URL des produits : ours, cameras et fournitures
-        for (let i = 0; i < urlApi.length; i++) {
-        const boucleUrl = urlApi[i]; 
-        const promisse01 = fetch(boucleUrl, {
-            method: "POST",
-            body: JSON.stringify(order),
-            headers: {'Content-Type': 'application/json'},
-            })
-            promisse01.then(async(res) => {
-                try {
-                    const contenu = await res.json();
-                    console.log(res);
-                    console.log("contenu.orderId");
-                    console.log(contenu.orderId);
-                    if(res.ok) {
-                        console.log(`contenu de la response: ${res.ok}`);
-                        localStorage.setItem("commande", contenu.orderId);
-                        window.location.href = "confirmation_commande.html";
-                    } else {
-                        console.log(`response du server:" ${res.status}`)
-                    };  
-                } catch(e) {
-                };
-            });
-    }; */
 
 function fetchOurs() {
-    const promisse01 = fetch('http://localhost:3000/api/teddies/order', {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: {'Content-Type': 'application/json'},
+    //Fetch pour chercher les produits dans l'API
+        fetch("http://localhost:3000/api/teddies/")
+        .then(res => {
+            if(res.ok){
+                return res.json();
+            } else {
+            }
+        }) 
+        .then(data => {
+        for(let i = 0; i < data.length; i++) {
+            localStorage.setItem("listeOurs", JSON.stringify(data));
+        }
         })
-        promisse01.then(async(res) => {
-            try {
-                const contenu = await res.json();
-                console.log(res);
-                console.log("contenu.orderId");
-                console.log(contenu.orderId);
-                if(res.ok) {
-                    console.log(`contenu de la response: ${res.ok}`);
-                    localStorage.setItem("commande", contenu.orderId);
-                    window.location.href = "confirmation_commande.html";
-                } else {
-                    console.log(`response du server:" ${res.status}`)
-                };  
-            } catch(e) {
-            };
+        .catch(err => { 
         });
-};
+        //Tableau vide pour récuperer les numéros d'Id 
+        let oursPelucheId = [];
+        //Va chercher les produits dans le Local Storage
+        let oursPeluche = JSON.parse(localStorage.getItem("listeOurs"));
+        //Boucle pour récupérer les numéros d'Id des produits
+        for(let o = 0; o < oursPeluche.length; o ++) {
+            oursPelucheId.push(oursPeluche[o]._id);
+        }
 
+        let products = oursPelucheId;
+        
+        localStorage.setItem("product", products);
+        
+        const order = {products, contact};
+        
+        //Envoie de requête POST pour en retour avoir le numéro de la commande
+        const promisse01 = fetch('http://localhost:3000/api/teddies/order', {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {'Content-Type': 'application/json'},
+                mode: 'cors'
+                })
+                promisse01.then(async(res) => {
+                    try {
+                        const contenu = await res.json();
+                        console.log("contenu.orderId");
+                        console.log(contenu.orderId);
+                        if(res.ok) {
+                            console.log(`contenu de la response: ${res.ok}`);
+                            localStorage.setItem("commande", contenu.orderId);
+                            window.location.href = "confirmation_commande.html"; 
+                        } else {
+                            console.log(`response du server: ${res.status}`);
+                        };  
+                    } catch(e) {
+                        console.log("Erreur!!");
+                    };
+                });       
+    }
+    
 function fetchCameras() {
-    const promisse01 = fetch('http://localhost:3000/api/cameras/order', {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: {'Content-Type': 'application/json'},
+        //Fetch pour chercher les produits dans l'API
+        fetch('http://localhost:3000/api/cameras')
+        .then(res => {
+            if(res.ok){
+                return res.json();
+            } else {
+            }
+        }) 
+        .then(data => {
+            for(let i = 0; i < data.length; i++) {
+            localStorage.setItem("listeCameras", JSON.stringify(data));
+        }
         })
-        promisse01.then(async(res) => {
-            try {
-                const contenu = await res.json();
-                console.log(res);
-                console.log("contenu.orderId");
-                console.log(contenu.orderId);
-                if(res.ok) {
-                    console.log(`contenu de la response: ${res.ok}`);
-                    localStorage.setItem("commande", contenu.orderId);
-                    window.location.href = "confirmation_commande.html";
-                } else {
-                    console.log(`response du server:" ${res.status}`)
-                };  
-            } catch(e) {
-            };
+        .catch(err => { 
         });
-};
-
-function fetchFurniture() {
-    const promisse01 = fetch('http://localhost:3000/api/furniture/order', {
-        method: "POST",
-        body: JSON.stringify(order),
-        headers: {'Content-Type': 'application/json'},
+        //Tableau vide pour récuperer les numéros d'Id 
+        let camerasId = [];
+        //Va chercher les produits dans le Local Storage
+        let camerasListe = JSON.parse(localStorage.getItem("listeCameras"));
+        //Boucle pour récupérer les numéros d'Id des produits
+        for(let i = 0; i < camerasListe.length; i ++) {
+            camerasId.push(camerasListe[i]._id);
+        }
+    
+        let products = camerasId;
+        
+        localStorage.setItem("product", products);
+        
+        const order = {products, contact};
+        
+        console.log(products);
+    
+            const promisse01 = fetch('http://localhost:3000/api/cameras/order', {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {'Content-Type': 'application/json'},
+                mode: 'cors'
+                })
+                promisse01.then(async(res) => {
+                    try {
+                        const contenu = await res.json();
+                        console.log("contenu.orderId");
+                        console.log(contenu.orderId);
+                        if(res.ok) {
+                            console.log(`contenu de la response: ${res.ok}`);
+                            localStorage.setItem("commande", contenu.orderId);
+                            window.location.href = "confirmation_commande.html"; 
+                        } else {
+                            console.log(`response du server: ${res.status}`);
+                        };  
+                    } catch(e) {
+                        console.log("Erreur!!");
+                    };
+                });       
+    }
+    
+function fetchMeubles() {
+        //Fetch pour chercher les produits dans l'API
+        fetch('http://localhost:3000/api/furniture')
+        .then(res => {
+            if(res.ok){
+                return res.json();
+            } else {
+            }
+        }) 
+        .then(data => {
+            for(let i = 0; i < data.length; i++) {
+            localStorage.setItem("listeMeubles", JSON.stringify(data));
+        }
         })
-        promisse01.then(async(res) => {
-            try {
-                const contenu = await res.json();
-                console.log(res);
-                console.log("contenu.orderId");
-                console.log(contenu.orderId);
-                if(res.ok) {
-                    console.log(`contenu de la response: ${res.ok}`);
-                    localStorage.setItem("commande", contenu.orderId);
-                    window.location.href = "confirmation_commande.html";
-                } else {
-                    console.log(`response du server:" ${res.status}`)
-                };  
-            } catch(e) {
-            };
+        .catch(err => { 
         });
-};
-
+    
+        let meublesId = [];
+        let meublesListe = JSON.parse(localStorage.getItem("listeMeubles"));
+        for(let i = 0; i < meublesListe.length; i++) {
+            meublesId.push(meublesListe[i]._id);
+        }
+    
+        let products = meublesId;
+        
+        localStorage.setItem("product", products);
+        
+        const order = {products, contact};
+        
+        console.log(products);
+    
+            const promisse01 = fetch('http://localhost:3000/api/furniture/order', {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {'Content-Type': 'application/json'},
+                mode: 'cors'
+                })
+                promisse01.then(async(res) => {
+                    try {
+                        const contenu = await res.json();
+                        console.log("contenu.orderId");
+                        console.log(contenu.orderId);
+                        if(res.ok) {
+                            console.log(`contenu de la response: ${res.ok}`);
+                            localStorage.setItem("commande", contenu.orderId);
+                            window.location.href = "confirmation_commande.html"; 
+                        } else {
+                            console.log(`response du server: ${res.status}`);
+                        };  
+                    } catch(e) {
+                        console.log("Erreur!!");
+                    };
+                });       
+    }
+    
 fetchOurs();
 fetchCameras();
-fetchFurniture();
-//}; 
-/////////////////  
+fetchMeubles(); 
+
 });
+////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////Prè-remplissage des champs des formulaires avec les données du Local Storage////////////////////////////////////
+/////////////Prè-remplissage des champs des formulaires avec les données du Local Storage///////////////
 const dataLocalStorage = localStorage.getItem("contact");
 const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
@@ -394,5 +450,3 @@ btnConfirmerCommande.addEventListener("click", (e) => {
     containerFormulaireCommande.innerHTML = afficherFormulaireCommande();
 //Exécuter l'action une seule fois
 }, {once : true}); 
-
-/////////////////////////////////////////////////////////////////////////////////////////

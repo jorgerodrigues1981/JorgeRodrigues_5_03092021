@@ -507,6 +507,11 @@ footer li {
         align-items: center;
     }
 
+    .container {
+        max-width:80%;
+        min-width: 200px;
+    }
+
     header {
         display: flex;
         flex-direction: column;
