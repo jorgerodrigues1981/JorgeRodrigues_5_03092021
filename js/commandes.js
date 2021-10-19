@@ -25,14 +25,17 @@ const commande = localStorage.getItem("commande");
 
 const messageConfirmation = document.querySelector("#message_confirmation");
 
-const contenuMessageConfirmation = `
-<p>Merci pour votre commande <strong>${dataUtilisateurObjet.lastName}, ${dataUtilisateurObjet.firstName}</strong> !</p>
-<p>Numéro de la commande: <strong>${commande}</strong> 
-<p>Votre commande dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
-<p>Merci de nous avoir choisi !<br><br>`;
+function affichageMessageConfirmation() {
+  const contenuMessageConfirmation = `
+  <p>Merci pour votre commande <strong>${dataUtilisateurObjet.lastName}, ${dataUtilisateurObjet.firstName}</strong> !</p>
+  <p>Numéro de la commande: <strong>${commande}</strong> 
+  <p>Votre commande dans la valeur total de <strong>${prixTotalProduits} €</strong> a été bien prise en compte. 
+  <p>Merci de nous avoir choisi !<br><br>`;
+  
+  messageConfirmation.innerHTML = contenuMessageConfirmation;
+};
 
-
-messageConfirmation.innerHTML = contenuMessageConfirmation;
+affichageMessageConfirmation();
 
 ////////////////////////////////////////////////////////
 
@@ -43,7 +46,15 @@ function effacerCleLocalStorage(key) {
 effacerCleLocalStorage("prixPanier");
 effacerCleLocalStorage("products");
 effacerCleLocalStorage("commande");
+effacerCleLocalStorage("listeCameras");
+effacerCleLocalStorage("listeOurs");
+effacerCleLocalStorage("listeMeubles");
+effacerCleLocalStorage("product");
 
-if(commande == null || prixPanier == null) {
- window.location.href="index.html";
-}
+function envoiePageAccueil() {
+  if(commande == null || prixTotalProduits == null) {
+    window.location.href="index.html";
+   }
+};
+
+envoiePageAccueil();

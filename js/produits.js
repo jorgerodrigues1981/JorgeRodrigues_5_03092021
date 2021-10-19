@@ -4,9 +4,7 @@ const listeOptions = document.getElementById("selectOption");
 const quantiteProduits = document.getElementById("quantite");
 const buttonAjouter = document.getElementById("btn_ajouter");
 const typeOption = document.getElementById("type_option");
-
 const monPanier = document.getElementById("mon_panier");
-
 const btnVoirPanier = document.getElementById("voir_panier");
 
 ////////////////////////////////////Ours en Peluche/////////////////////////////////////////////
@@ -39,15 +37,15 @@ function fetchOurs() {
   //GESTION DES OPTIONS DU PRODUIT
   
   //Boucle pour les choisir options du produit données par l'API
-    const choisirCouleur = data.colors;
+      const choisirCouleur = data.colors;
   
-    let listeOptionsOurs = [];
-  
-    for(let i = 0; i < choisirCouleur.length; i++) {
-      listeOptionsOurs = listeOptionsOurs + 
-      `<option value="${choisirCouleur[i]}">${choisirCouleur[i]}</option>`
-    }
-  
+      let listeOptionsOurs = [];
+    
+      for(let i = 0; i < choisirCouleur.length; i++) {
+        listeOptionsOurs = listeOptionsOurs + 
+        `<option value="${choisirCouleur[i]}">${choisirCouleur[i]}</option>`
+      };
+
     //Injecter la boucle dans le HTML
     listeOptions.innerHTML = listeOptionsOurs;
     //Change le texte pour les options du produit
@@ -87,7 +85,7 @@ function fetchOurs() {
     });
   })
   .catch(err => { 
-
+    console.log("Produit été pas ajouté au panier !!")
   });
 };
 ////////////////////////////////////Caméras Vintage/////////////////////////////////////////////
@@ -173,6 +171,7 @@ function fetchCameras() {
   
   })
   .catch(err => { 
+    console.log("Produit été pas ajouté au panier !!")
   });
 }
 ////////////////////////////////////Meubles en chêne/////////////////////////////////////////////
@@ -257,10 +256,11 @@ function fetchMeubles() {
     });
   })
   .catch(err => { 
-
+    console.log("Produit été pas ajouté au panier !!")
   });  
 };
 
+//On appelle les functions
 fetchOurs();
 fetchCameras();
 fetchMeubles();

@@ -4,97 +4,103 @@ const totalPanier = document.getElementById("panier_montant_total");
 const btnSupprimer = document.getElementsByClassName("btn_supprimer");
 const containerBtnSupprimer = document.getElementById("container_btn_supprimer");
 
-
 //Envoie les produits dans le local storage
 let products = JSON.parse(localStorage.getItem("products"));
 
-//Function pour vérifier si le panier est vide
+//Function pour vérifier si le panier est vide 
 function panierVide() {
     if(products === null || products == 0) {
-        console.log("panier vide = true");
+        console.log("Le panier est vide !");
         return false;
     } else {
-        console.log("panier vide = false");
+        console.log("Le panier est pas vide !");
         return true;
     };
 }
 
 //Affichage de message quand le panier est vide 
-if(panierVide() == false) {
-    const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
-    articlesPanier.innerHTML = panierVide;
-    //Fait dispâraitre le bouton vider panier
-    articlesPanier.removeChild(); 
-} else {
-    let structurePanier = [];
-    for(let k = 0; k < products.length; k++) {
-    structurePanier = structurePanier + 
-    `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${products[k].prixProduit * products[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
-    articlesPanier.innerHTML = structurePanier;
-
-///////////////////////////Bouton supprimer l'article////////////////////////////
-
-//Boucle pour acceder a tous les boutons supprimer
-    for(let x = 0; x < btnSupprimer.length; x++ ) {
-        
-        btnSupprimer[x].addEventListener("click", (event) => {
-        event.preventDefault();
-        
-        let idSupression = products[x].idProduit;
-        products = products.filter (
-            (el) => el.idProduit !== idSupression
-        );
-            localStorage.setItem ("products", JSON.stringify(products));
-            window.location.href = "panier.html"; //Refresh de la page
-        });
+function afficherProduitsPanier(){
+    if(panierVide() == false) {
+        const panierVide = `<div id="panier_vide"><p>Le panier est vide !</p></div>`; 
+        articlesPanier.innerHTML = panierVide;
+        //Fait dispâraitre le bouton vider panier
+        articlesPanier.removeChild(); 
+    } else {
+        let structurePanier = [];
+        for(let k = 0; k < products.length; k++) {
+        structurePanier = structurePanier + 
+        `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[k].nomProduit}</span></p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[k].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix : <span class="text_souligne">${products[k].prixProduit * products[k].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
+        articlesPanier.innerHTML = structurePanier;
+    
+    ///////////////////////////Bouton supprimer l'article////////////////////////////
+    //Boucle pour acceder a tous les boutons supprimer
+        for(let x = 0; x < btnSupprimer.length; x++ ) {
+            
+            btnSupprimer[x].addEventListener("click", (event) => {
+            event.preventDefault();
+            
+            let idSupression = products[x].idProduit;
+            products = products.filter (
+                (el) => el.idProduit !== idSupression
+            );
+                localStorage.setItem ("products", JSON.stringify(products));
+                window.location.href = "panier.html"; //Refresh de la page
+            });
+        }
     }
+    };
 }
-};
+//Appel de la function
+afficherProduitsPanier();
 
 ///////////////////////////////Bouton pour vider le panier///////////////////////
 
-//Injecter le bouton dans le HTML avec la methode insertAdjacentHTML
+//Injecter le bouton "vider le panier" dans le HTML avec la methode insertAdjacentHTML
 const supprimerPanier = 
 `<div id="container_btn_supprimer"><button id="btn_vider_panier">Vider le panier</button></div>`;
 articlesPanier.insertAdjacentHTML("beforeend", supprimerPanier);
 
-//Acceder au bouton pour vider le panier
+//Acceder au bouton "vider le panier"
 const btnViderPanier = document.getElementById("btn_vider_panier"); 
 
-btnViderPanier.addEventListener("click", (e) => {
-    e.preventDefault();
+//Event Listener du bouton "vider le panier"
+function viderPanier() {
     //Vider le localStorage
     localStorage.removeItem("products");
     //Refresh de la page
     window.location.href = "panier.html"; 
-});
+}
 
-
+btnViderPanier.addEventListener("click", viderPanier);
 
 //////////////////////////////Total du panier///////////////////////////////
 
-let prixTotalPanier = [];
+function prixTotalPanier() {
+    let prixTotalPanier = [];
 
-for(let m = 0; m < products.length; m++) {
-    let prixProduitPanier = products[m].prixProduit * products[m].quantiteProduit;
-
-    prixTotalPanier.push(prixProduitPanier);
+    for(let m = 0; m < products.length; m++) {
+        let prixProduitPanier = products[m].prixProduit * products[m].quantiteProduit;
+    
+        prixTotalPanier.push(prixProduitPanier);
+    }
+    
+    const reducer = (previousValue, currentValue) => previousValue + currentValue;
+    
+    //Afficher le montant total a payer
+    const containerTotalPanierHtml = `
+    <div id="container_total_panier" class="data_panier">
+    <p id="panier_montant_total"><strong>Montant total à payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
+    </div>`
+    
+    //Envoyer le prix total du panier dans le local storage
+    localStorage.setItem("prixPanier", JSON.stringify(prixTotalPanier.reduce(reducer)));
+    let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
+    
+    //Ajoute le HTML du containerTotalPanierHtml
+    articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
 }
 
-const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-//Afficher le montant total a payer
-const containerTotalPanierHtml = `
-<div id="container_total_panier" class="data_panier">
-<p id="panier_montant_total"><strong>Montant total à payer : </strong><span id="total_prix_panier">${prixTotalPanier.reduce(reducer)} €</span></p>
-</div>`
-
-//Envoyer le prix total du panier dans le local storage
-localStorage.setItem("prixPanier", JSON.stringify(prixTotalPanier.reduce(reducer)));
-let prixTotalProduits = JSON.parse(localStorage.getItem("prixPanier"));
-
-//Ajoute le HTML du containerTotalPanierHtml
-articlesPanier.insertAdjacentHTML("beforeend", containerTotalPanierHtml);
+prixTotalPanier();
 
 /////////////////////////////////Formulaire commande////////////////////////////
 
@@ -192,8 +198,8 @@ function fetchOurs() {
         //Va chercher les produits dans le Local Storage
         let oursPeluche = JSON.parse(localStorage.getItem("listeOurs"));
         //Boucle pour récupérer les numéros d'Id des produits
-        for(let o = 0; o < oursPeluche.length; o ++) {
-            oursPelucheId.push(oursPeluche[o]._id);
+        for(let i = 0; i < oursPeluche.length; i ++) {
+            oursPelucheId.push(oursPeluche[i]._id);
         }
 
         let products = oursPelucheId;

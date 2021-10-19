@@ -4,8 +4,8 @@ const camerasVintage = document.getElementById("camerasVintage");
 const meublesChene = document.getElementById("meublesChene");
 
 ////////////////////////////////////OURS EN PELUCHE/////////////////////////////////////////////
-
-// Récupère les données de la API pour les Ours en Peluche
+//Récupère les données de la API pour les Ours en Peluche
+function afficheOursPeluche() {
     fetch("http://localhost:3000/api/teddies")
     .then(res => {
         if(res.ok){
@@ -30,17 +30,20 @@ const meublesChene = document.getElementById("meublesChene");
         </a></div>`
         };
         //Affichage des produit sur la page
+        console.log("Les ours de peluche sont disponibles !");
         oursPeluche.innerHTML = listeOurs; 
     })
     // Message en cas d'erreur
     .catch(err => { 
+        console.log("Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !");
         oursPeluche.innerHTML = "Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !"; 
     });
+}
 
 ////////////////////////////////////CAMéRAS VINTAGE/////////////////////////////////////////////
-
-// Récupère les données de la API pour les Caméras vintage
-    fetch("http://localhost:3000/api/cameras")
+//Récupère les données de la API pour les Caméras vintage
+function afficheCameras() { 
+fetch("http://localhost:3000/api/cameras")
     .then(res => {
         if(res.ok){
             return res.json();
@@ -64,42 +67,52 @@ const meublesChene = document.getElementById("meublesChene");
         <p>
         </a></div>`
         };
+        //Affichage des produit sur la page
+        console.log("Les caméras sont disponibles !");
         camerasVintage.innerHTML = listeCameras;
     })
     // Message en cas d'erreur
     .catch(err => { 
         camerasVintage.innerHTML = "Une erreur est survenue ! Les caméras sont pas disponibles pour le moment !!!";
     });
+};
 
 ////////////////////////////////////MEUBLES EN CHËNE/////////////////////////////////////////////
+//Récupère les données de la API pour les Meubles en chêne
+function afficheMeubles() {
+    fetch("http://localhost:3000/api/furniture")
+    .then(res => {
+        if(res.ok){
+            return res.json();
+        } else {
+            console.log("Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !");
+        }
+    }) 
+    .then(data => {
+        let listeMeubles = " ";
+        //Boucle pour récupérer les données des produits - Meubles en chêne
+        for(let i = 0; i < data.length; i++) {
+        
+        listeMeubles +=
+        `<div id="container_item">
+        <a href="produit.html?${data[i]._id}">
+        <h1>${data[i].name}</h1>
+        <img src="${data[i].imageUrl}">
+        <p>${data[i].price / 100} €<p>
+        <p>
+        </a></div>`
+        };
+        //Affichage des produit sur la page
+        console.log("Les meubles en chêne sont disponibles !");
+        meublesChene.innerHTML = listeMeubles; 
+    })
+    //Message en cas d'erreur
+    .catch(err => { 
+        meublesChene.innerHTML = "Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !"; 
+    });
+};
 
-// Récupère les données de la API pour les Meubles en chêne
-fetch("http://localhost:3000/api/furniture")
-.then(res => {
-    if(res.ok){
-        return res.json();
-    } else {
-        console.log("Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !");
-    }
-}) 
-.then(data => {
-    let listeMeubles = " ";
-    //Boucle pour récupérer les données des produits - Meubles en chêne
-    for(let i = 0; i < data.length; i++) {
-    
-    listeMeubles +=
-    `<div id="container_item">
-    <a href="produit.html?${data[i]._id}">
-    <h1>${data[i].name}</h1>
-    <img src="${data[i].imageUrl}">
-    <p>${data[i].price / 100} €<p>
-    <p>
-    </a></div>`
-    };
-    //Affichage des produit sur la page
-    meublesChene.innerHTML = listeMeubles; 
-})
-//Message en cas d'erreur
-.catch(err => { 
-    meublesChene.innerHTML = "Une erreur est survenue ! Les meubles sont pas disponibles pour le moment !"; 
-});
+//On appelle les functions
+afficheOursPeluche();
+afficheCameras();
+afficheMeubles();
