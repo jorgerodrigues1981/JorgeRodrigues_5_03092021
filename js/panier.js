@@ -176,7 +176,6 @@ const order = {products, contact};
 
 //////////////////////////////Méthode POST///////////////////////////////////
 
-
 function fetchOurs() {
     //Fetch pour chercher les produits dans l'API
         fetch("http://localhost:3000/api/teddies/")
@@ -194,14 +193,16 @@ function fetchOurs() {
         .catch(err => { 
         });
         //Tableau vide pour récuperer les numéros d'Id 
-        let oursPelucheId = [];
+        const oursPelucheId = [];
         //Va chercher les produits dans le Local Storage
-        let oursPeluche = JSON.parse(localStorage.getItem("listeOurs"));
+        const oursPeluche = JSON.parse(localStorage.getItem("listeOurs"));
         //Boucle pour récupérer les numéros d'Id des produits
-        for(let i = 0; i < oursPeluche.length; i ++) {
-            oursPelucheId.push(oursPeluche[i]._id);
-        }
-
+        if(oursPeluche != null) {
+            for(let i = 0; i < oursPeluche.length; i++) {
+                oursPelucheId.push(oursPeluche[i]._id);
+            }
+        };
+        
         let products = oursPelucheId;
         
         localStorage.setItem("product", products);
@@ -232,7 +233,7 @@ function fetchOurs() {
                     };
                 });       
     }
-    
+
 function fetchCameras() {
         //Fetch pour chercher les produits dans l'API
         fetch('http://localhost:3000/api/cameras')
@@ -250,13 +251,15 @@ function fetchCameras() {
         .catch(err => { 
         });
         //Tableau vide pour récuperer les numéros d'Id 
-        let camerasId = [];
+        const camerasId = [];
         //Va chercher les produits dans le Local Storage
-        let camerasListe = JSON.parse(localStorage.getItem("listeCameras"));
+        const camerasListe = JSON.parse(localStorage.getItem("listeCameras"));
         //Boucle pour récupérer les numéros d'Id des produits
-        for(let i = 0; i < camerasListe.length; i ++) {
-            camerasId.push(camerasListe[i]._id);
-        }
+        if(camerasListe != null) {
+            for(let i = 0; i < camerasListe.length; i ++) {
+                camerasId.push(camerasListe[i]._id);
+            }
+        };
     
         let products = camerasId;
         
@@ -307,11 +310,13 @@ function fetchMeubles() {
         .catch(err => { 
         });
     
-        let meublesId = [];
-        let meublesListe = JSON.parse(localStorage.getItem("listeMeubles"));
-        for(let i = 0; i < meublesListe.length; i++) {
-            meublesId.push(meublesListe[i]._id);
-        }
+        const meublesId = [];
+        const meublesListe = JSON.parse(localStorage.getItem("listeMeubles"));
+        if(meublesListe != null) {
+            for(let i = 0; i < meublesListe.length; i++) {
+                meublesId.push(meublesListe[i]._id);
+            }
+        };
     
         let products = meublesId;
         
@@ -348,9 +353,7 @@ function fetchMeubles() {
 fetchOurs();
 fetchCameras();
 fetchMeubles(); 
-
 });
-////////////////////////////////////////////////////////////////////////////////////
 
 /////////////Prè-remplissage des champs des formulaires avec les données du Local Storage///////////////
 const dataLocalStorage = localStorage.getItem("contact");
@@ -361,12 +364,9 @@ prenomUser.value = dataLocalStorageObjet.firstName;
 adresseUser.value = dataLocalStorageObjet.address;
 villeUser.value = dataLocalStorageObjet.city;
 mailUser.value = dataLocalStorageObjet.email;
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////Validation du formulaire//////////////////////////////////////////
-
 const validationNom = document.querySelector("#validation_nom");
-
 //Validation du nom
 function valChampNom(){
     if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(nomUser.value)) {
