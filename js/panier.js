@@ -170,7 +170,7 @@ const contact = {
 
 //Envoie des données du formulaire dans le Local Storage
 localStorage.setItem("contact", JSON.stringify(contact));
-    
+
 //Informations a envoyer sur le server
 const order = {products, contact};
 
