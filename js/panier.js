@@ -369,7 +369,7 @@ mailUser.value = dataLocalStorageObjet.email;
 const validationNom = document.querySelector("#validation_nom");
 //Validation du nom
 function valChampNom(){
-    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(nomUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]){3,20})$/.test(nomUser.value)) {
         document.getElementById("validation_nom").innerHTML = "";
         nomUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -382,7 +382,7 @@ function valChampNom(){
 
 //Validation du prénom
 function valChampPrenom(){
-    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(prenomUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ]){3,20})$/.test(prenomUser.value)) {
         document.getElementById("validation_prenom").innerHTML = "";
         prenomUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
@@ -408,7 +408,7 @@ function valChampAdresse(){
 
 //Validation de la ville
 function valChampVille(){
-    if(/^(([a-zA-ZÀ-ÿ]+[\s\-]{1}[a-zA-ZÀ-ÿ]+)|([a-zA-ZÀ-ÿ]+))$/.test(villeUser.value)) {
+    if(/^(([a-zA-ZÀ-ÿ -]){3,50})$/.test(villeUser.value)) {
         document.getElementById("validation_ville").innerHTML = "";
         villeUser.style.border = "2px solid #62E74D";
         btnEnvoyerCommande.disabled = false;
