@@ -29,7 +29,7 @@ function afficherProduitsPanier(){
         let structurePanier = [];
         for(let i = 0; i < products.length; i++) {
         structurePanier = structurePanier + 
-        `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[i].nomProduit}</span> [${products[i].optionProduit}]</p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[i].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix unit. : <strong>${products[i].prixProduit} €</strong><br>Prix total : <span class="text_souligne">${products[i].prixProduit * products[i].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
+        `<div id="panier_table"><div class="item_table" id="nom_produit"><p><span class="text_souligne">${products[i].nomProduit}</span> [${products[i].optionProduit}]</p></div><div class="item_table"><p>Quantité : <span class="text_souligne">${products[i].quantiteProduit}</span></p></div><div class="item_table" id="prix_produit"><p>Prix/unité : <strong>${products[i].prixProduit} €</strong><br>Prix total : <span class="text_souligne">${products[i].prixProduit * products[i].quantiteProduit} €</span></p></div><button class="btn_supprimer">Supprimer</button></div>`;
         articlesPanier.innerHTML = structurePanier;
     
     ///////////////////////////Bouton supprimer l'article////////////////////////////
