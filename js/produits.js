@@ -93,7 +93,7 @@ function fetchCameras() {
   const urlItemCamera="http://localhost:3000/api/cameras";
   const productId = window.location.search.substring(1);
   const urlCamera=`${urlItemCamera}/${productId}`; 
-  
+//Récupère les données de la API pour les Caméras
   fetch(urlCamera)
   .then(res => {
     if(res.ok) {
@@ -179,7 +179,7 @@ function fetchMeubles() {
   const urlItemMeuble="http://localhost:3000/api/furniture";
   const productId = window.location.search.substring(1);
   const urlMeuble=`${urlItemMeuble}/${productId}`; 
-  
+  //Récupère les données de la API pour les Meubles
   fetch(urlMeuble)
   .then(res => {
     if(res.ok) {

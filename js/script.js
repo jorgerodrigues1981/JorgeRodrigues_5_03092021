@@ -8,15 +8,15 @@ const meublesChene = document.getElementById("meublesChene");
 function afficheOursPeluche() {
     fetch("http://localhost:3000/api/teddies")
     .then(res => {
-        if(res.ok){
-            return res.json();
+        if(res.ok){ 
+            return res.json(); //Réponse en format JSON
         } else {
-            console.log("Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !");
-        }
+            console.log("Une erreur est survenue ! Les ours de peluche sont pas disponibles pour le moment !"); //Message d'erreur en cas de problème avec la requête
+        } 
     }) 
     .then(data => {
         let listeOurs = " ";
-    
+        
     //Boucle pour récupérer les données des produits - Ours en Peluche
     for(let i = 0; i < data.length; i++) {
         
@@ -46,13 +46,13 @@ function afficheCameras() {
 fetch("http://localhost:3000/api/cameras")
     .then(res => {
         if(res.ok){
-            return res.json();
+            return res.json(); //Response en format JSON
         } else {
-            console.log("Une erreur est survenue ! Les caméras sont pas disponibles pour le moment !");
+            console.log("Une erreur est survenue ! Les caméras sont pas disponibles pour le moment !"); //Message d'erreur en cas de problème avec la requête
         }
     }) 
     .then(data => {
-        
+
         let listeCameras = " ";
     
         //Boucle pour récupérer les données des produits - Caméras vintage
@@ -92,7 +92,7 @@ function afficheMeubles() {
         let listeMeubles = " ";
         //Boucle pour récupérer les données des produits - Meubles en chêne
         for(let i = 0; i < data.length; i++) {
-        
+           
         listeMeubles +=
         `<div id="container_item">
         <a href="produit.html?${data[i]._id}">
