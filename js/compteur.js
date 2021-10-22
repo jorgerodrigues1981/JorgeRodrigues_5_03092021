@@ -1,6 +1,6 @@
 //Accéder au DOM
 const compteurArticlesPanier = document.querySelector(".nombre_total_articles");
-const produitLocalStorage = localStorage.getItem("products");
+const produitLocalStorage = localStorage.getItem("productsOurs");
 const dataProduitLocalStorage = JSON.parse(produitLocalStorage);
 
 

@@ -1,16 +1,4 @@
 
-/////////////Local Storage - Produits dans le panier//////////////////
-/*
-const dataProductsObjet = JSON.parse(localStorage.getItem("products"));
-
-//Boucle pour afficher l'information des produits dans la page de confirmation de commande
-const produitsDansCommande = [];
-
-for(let i = 0; i < dataProductsObjet.length; i++) {
-    let commandePanier = dataProductsObjet[i].nomProduit;
-   produitsDansCommande.push(commandePanier);
-};
-*/
 /////////////Local Storage - Données de l'utilisateur//////////////////
 
 const dataUtilisateurObjet = JSON.parse(localStorage.getItem("contact"));
@@ -46,10 +34,7 @@ function effacerCleLocalStorage(key) {
 effacerCleLocalStorage("prixPanier");
 effacerCleLocalStorage("products");
 effacerCleLocalStorage("commande");
-effacerCleLocalStorage("listeCameras");
-effacerCleLocalStorage("listeOurs");
-effacerCleLocalStorage("listeMeubles");
-effacerCleLocalStorage("product");
+effacerCleLocalStorage("productsOurs");
 
 function envoiePageAccueil() {
   if(commande == null || prixTotalProduits == null) {

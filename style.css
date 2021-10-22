@@ -94,9 +94,10 @@ header img {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    max-width: 300px;
-    min-width: 200px;
+    align-content: center;
     padding: 20px;
     margin: 10px;
     background-color: cadetblue;
@@ -107,19 +108,20 @@ header img {
     background-color: crimson;
 }
 
-.box02 {
-    background-color: rgb(20, 163, 220);
-}
-
-.box03 {
-    background-color: rgb(220, 190, 20);
-}
-
 #container_item {
     background-color: #F3E9F1;
     border-radius: 20px;
+    max-width: 200px;
+    min-width: 200px;
     padding: 10px;
     margin: 10px;
+}
+
+#oursPeluche {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: auto;
 }
 
 #container_item h1 {
@@ -220,27 +222,40 @@ footer li {
     justify-content: center;
     align-items: center;
     margin: 20px;
+    width: 100%;
 }
 
 #container_panier h1 {
     text-align: center;
 }
 
-.data_panier {
+
+#container_articles {
     display: flex;
     flex-direction: column;
+    align-content: center;
+    justify-items: center;
     background-color:#F3E9F1;
-    width: 60%;
+    width: 70%;
     padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }
 
 #container_total_panier {
-    display: flex;
-    flex-flow: row;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
+    padding: 10px;
     background-color: cadetblue;
-    border-radius: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+#validation_form {
+    font-size: 0.7em;
+    color: brown;
+    text-align: center;
+    height: 20px;
+    margin-top: 10px;
 }
 
 #panier_vide {
@@ -251,11 +266,11 @@ footer li {
 #panier_table {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     margin: 5px;
     border: 2px solid white;
-    
+    border-radius: 10px;
 }
 
 .item_table {
@@ -319,7 +334,7 @@ footer li {
 .btn_supprimer {
     background-color: #261624;
     color: white;
-    margin: 10px;
+    margin: 20px;
     border: 1px solid white;
     border-radius: 10px;
     padding: 8px;
@@ -340,6 +355,20 @@ footer li {
     margin: 5px;
 }
 
+#container_btn_vider_panier {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#container_btn_confirmer_commande {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #btn_vider_panier {
     background-color: royalblue;
     color: white;
@@ -349,6 +378,7 @@ footer li {
     padding: 8px;
     box-shadow: 1px 1px 6px royalblue;
     width: 200px;
+    visibility: visible;
 }
 
 #btn_vider_panier:hover {
@@ -367,6 +397,7 @@ footer li {
     padding: 8px;
     box-shadow: 1px 1px 6px #3AD04F;
     width: 300px;
+    visibility: visible;
 }
 
 #btn_confirmer_commande:hover {
@@ -426,6 +457,22 @@ footer li {
 }
 
 /* Formulaire */
+.champ_form input:invalid {
+    border: 1px solid red;
+  }
+
+.champ_form input:valid {
+    border: 1px solid greenyellow;
+  }
+
+.champ_form textarea:invalid {
+    border: 1px solid red;
+  }
+  
+.champ_form textarea:valid {
+    border: 1px solid greenyellow;
+}
+
 #info_validation {
     font-size: 0.8em;
     color: crimson;
@@ -465,8 +512,10 @@ footer li {
 }
 
 #formulaire_commande {
-    background-color:#F3E9F1;
+    background-color:white;
+    width: 70%;
     padding: 20px;
+    border-radius: 20px;
 }
 
 #form_donnees_commande {
@@ -475,6 +524,7 @@ footer li {
     border-radius: 20px;
     background-color: #cfcccf;
     padding: 20px;
+    border: 2px solid black;
 }
 
 
@@ -499,6 +549,9 @@ footer li {
     border-radius: 20px;
 }
 
+#formulaire_commande {
+    visibility: hidden;
+}
 
 @media only screen and (max-width: 1024px) {
     .produits {
