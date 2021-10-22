@@ -20,7 +20,39 @@
         <main>
             <section id="container_panier">
                 <h1>Votre panier</h1>
-                <div id="articles_panier" class="data_panier"></div>
+                <div id="container_articles">
+                    <div id="articles_panier" class="data_panier"></div>
+                    <div id="container_btn_vider_panier"><button id="btn_vider_panier">Vider le panier</button></div>
+                    <div id="container_btn_confirmer_commande"><button id="btn_confirmer_commande">Confirmer la commande</button></div>
+                </div>
+                <div id="formulaire_commande">
+                    <h2>Formulaire de commande</h2>
+                    <form id="form_donnees_commande">
+                        <div class="champ_form">
+                            <label for="nom">Nom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="nom" class="input_form" name="user_nom" placeholder="Nom" required>
+                        </div>
+                        <div class="champ_form">
+                            <label for="prenom">Prénom <span class="asterisque_form">*</span></label>
+                            <input type="text" id="prenom" class="input_form" name="user_prenom" placeholder="Prenom" required><br>
+                        </div>
+                       <div class="champ_form">
+                            <label for="adresse">Adresse<span class="asterisque_form">*</span></label>
+                            <textarea type="text" id="adresse" class="input_form" name="user_adresse" placeholder="Adresse" required></textarea><br>    
+                        </div>
+                        <div class="champ_form">
+                            <label for="ville">Ville <span class="asterisque_form">*</span></label>
+                            <input type="text" rows="5" id="ville" class="input_form" name="user_ville" placeholder="Ville" required><br>    
+                        </div>
+                        <div class="champ_form">
+                            <label for="mail">E-mail <span class="asterisque_form">*</span></label>
+                            <input type="email" id="mail" class="input_form" name="user_mail" placeholder="E-mail" required>  
+                        </div>
+                        <p id="validation_form" class="texte_validation"></p>
+                        <br><p id="info_validation">Les champs indiqués par une * sont obligatoires</p>
+                        <button type="submit" id="btn_envoyer_commande">Envoyer la commande</button>
+                    </form>
+                </div>
             </section>
         </main>
     
